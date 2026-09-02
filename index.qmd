@@ -36,7 +36,7 @@ We present these datasets in @tbl-load-data.
 
 ```{r}
 #| label: tbl-load-data
-#| tbl-cap: "Raw data (maximum amplitude, decay rate) for the draft manuscript analyses" 
+#| tbl-cap: "Raw data (maximum amplitude, decay rate) for the manuscript analyses" 
 #| tbl-subcap:
 #|   - "WT data under solvent exchange conditions"
 #|   - "WT data for comparison with D162A and H170 variants"
