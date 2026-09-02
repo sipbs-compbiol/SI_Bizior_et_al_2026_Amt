@@ -1,0 +1,36 @@
+﻿Sheet,Source ID,Variant,Substrate,LPR,Replicate,Parameter,Unit,Value,Use status
+LPR5,2022-01-25-0090,D162A,NH4+,LPR5,n1:1,Maximum amplitude,nA,1.156,used
+LPR5,2022-01-25-0090,D162A,NH4+,LPR5,n1:1,k,s^-1,46.01,used
+LPR5,2022-01-25-0128,D162A,NH4+,LPR5,n1:2,Maximum amplitude,nA,1.179,used
+LPR5,2022-01-25-0128,D162A,NH4+,LPR5,n1:2,k,s^-1,48.94,used
+LPR5,2022-01-25-0092,D162A,NH4+,LPR5,n1:3,Maximum amplitude,nA,0.987,used
+LPR5,2022-01-25-0092,D162A,NH4+,LPR5,n1:3,k,s^-1,37.94,used
+LPR5,2022-01-25-0103,D162A,NH4+,LPR5,n2:1,Maximum amplitude,nA,0.991,used
+LPR5,2022-01-25-0103,D162A,NH4+,LPR5,n2:1,k,s^-1,36.11,used
+LPR5,2022-01-25-0112,D162A,NH4+,LPR5,n2:2,Maximum amplitude,nA,1.506,used
+LPR5,2022-01-25-0112,D162A,NH4+,LPR5,n2:2,k,s^-1,28.12,used
+LPR5,2022-01-31-0105,D162A,NH4+,LPR5,n3:1,Maximum amplitude,nA,1.387,used
+LPR5,2022-01-31-0105,D162A,NH4+,LPR5,n3:1,k,s^-1,41.56,used
+LPR5,2022-01-31-0106,D162A,NH4+,LPR5,n3:2,Maximum amplitude,nA,0.942,used
+LPR5,2022-01-31-0106,D162A,NH4+,LPR5,n3:2,k,s^-1,63.22,used
+LPR5,2022-01-31-0121,D162A,NH4+,LPR5,n3:3,Maximum amplitude,nA,1.141,used
+LPR5,2022-01-31-0121,D162A,NH4+,LPR5,n3:3,k,s^-1,30.96,used
+LPR5,2022-01-31-0122,D162A,NH4+,LPR5,n3:3 duplicate/second trace,Maximum amplitude,nA,0.923,used
+LPR10,2022-01-25-0120,D162A,NH4+,LPR10,n1:1,Maximum amplitude,nA,1.096,used
+LPR10,2022-01-25-0120,D162A,NH4+,LPR10,n1:1,k,s^-1,33.7,used
+LPR10,2022-01-25-0122,D162A,NH4+,LPR10,n1:2,Maximum amplitude,nA,0.897,used
+LPR10,2022-01-25-0122,D162A,NH4+,LPR10,n1:2,k,s^-1,63.73,used
+LPR10,2022-01-25-0091,D162A,NH4+,LPR10,n1:3,Maximum amplitude,nA,0.861,used
+LPR10,2022-01-25-0091,D162A,NH4+,LPR10,n1:3,k,s^-1,33.6,used
+LPR10,2022-01-25-0129,D162A,NH4+,LPR10,n2:1,Maximum amplitude,nA,1.068,used
+LPR10,2022-01-25-0129,D162A,NH4+,LPR10,n2:1,k,s^-1,41.27,used
+LPR10,2022-01-25-0130,D162A,NH4+,LPR10,n2:2,Maximum amplitude,nA,0.939,used
+LPR10,2022-01-25-0130,D162A,NH4+,LPR10,n2:2,k,s^-1,37.81,used
+LPR10,2022-01-25-0139,D162A,NH4+,LPR10,n2:3,Maximum amplitude,nA,0.789,used
+LPR10,2022-01-25-0140,D162A,NH4+,LPR10,n3:1,Maximum amplitude,nA,0.817,used
+LPR10,2022-01-25-0140,D162A,NH4+,LPR10,n3:1,k,s^-1,53.73,used
+LPR10,2022-01-31-0138,D162A,NH4+,LPR10,n3:2,Maximum amplitude,nA,0.999,used
+LPR10,2022-01-31-0138,D162A,NH4+,LPR10,n3:2,k,s^-1,32,used
+LPR10,2022-01-31-0139,D162A,NH4+,LPR10,n3:3 first/failed k,Maximum amplitude,nA,1.144,used
+LPR10,2022-01-31-0157,D162A,NH4+,LPR10,n3:3 second trace,Maximum amplitude,nA,0.911,used
+LPR10,2022-01-31-0157,D162A,NH4+,LPR10,n3:3 second trace,k,s^-1,51.89,used

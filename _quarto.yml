@@ -31,6 +31,12 @@ format:
     toc: true
     css: styles.css
     embed-resources: true
+    code-fold: true
+    code-summary: "Show the code"
+    self-contained: true
+
+lightbox: true
+dpi: 300
 
 outputs:
   format: xml

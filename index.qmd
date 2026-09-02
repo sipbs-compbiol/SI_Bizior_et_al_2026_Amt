@@ -10,11 +10,82 @@ about:
     - icon: envelope
       text: Email
       href: mailto:leighton.pritchard@strath.ac.uk
+toc: false
 ---
 
-## About These Pages
+## Introduction
 
 This site is provided to enable reproduction and independent exploration of the statistical analyses reported in Henderson _et al._ (2026).
+
+These pages describe linear regression modelling for the manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve." We analyse this data to establish evidence in support of answers to the following key questions:
+
+1. Whether the two `WT` control datasets from solvent-exchange and variant comparison can be pooled.
+2. Whether, in the `H2O` condition, there are effects on maximum amplitude or decay rate constant due to lipid-protein ratio or `D162A` substitution.
+3. Whether there are effects on maximum amplitude or decay rate constant due to `H170` substitution.
+
+## Datasets
+
+Data files for this analysis can be downloaded from the links below:
+
+- [`01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv): `WT` data for the solvent-exchange experiment
+- [`02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv): `WT` data for comparisons with `D162A` and `H170` variants
+- [`03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv): data for the `D162A` variant
+- [`04_H170_variant_comparison.csv`](assets/data/04_H170_variant_comparison.csv): data for `H170` variants
+
+We present these datasets in @tbl-load-data.
+
+```{r}
+#| label: tbl-load-data
+#| tbl-cap: "Raw data (maximum amplitude, decay rate) for the draft manuscript analyses" 
+#| tbl-subcap:
+#|   - "WT data under solvent exchange conditions"
+#|   - "WT data for comparison with D162A and H170 variants"
+#|   - "D162A variant data"
+#|   - "H170 variant data"
+#| layout-ncol: 1
+
+# Read in WT data
+dfm_wt_1 <- readr::read_csv("assets/data/01_WT_solvent_exchange_conditions.csv", col_names=TRUE, col_types="fffcdd") |>
+  dplyr::mutate(LPR = stringr::str_c("LPR", LPR)) |>
+  dplyr::mutate(Variant = "WT")
+dfm_wt_1$LPR <- factor(dfm_wt_1$LPR, levels=c("LPR5", "LPR10", "LPR50"))
+colnames(dfm_wt_1) <- c("Condition", "LPR", "Replicate", "Trace_ID", "Max_Amplitude", "Decay_Rate", "Variant")
+dfm_wt_1 <- dfm_wt_1 |> dplyr::select(Variant, Condition, LPR, Max_Amplitude, Decay_Rate)
+
+dfm_wt_2 <- readr::read_csv("assets/data/02_WT_variant_comparison.csv", col_names=TRUE, col_types="fccddcc") |>
+  dplyr::mutate(LPR = stringr::str_c("LPR", LPR)) |>
+  dplyr::mutate(Variant = "WT")
+dfm_wt_2$LPR <- factor(dfm_wt_2$LPR, levels=c("LPR5", "LPR10", "LPR50"))
+colnames(dfm_wt_2) <- c("LPR", "Trace_ID", "Measurement", "Max_Amplitude", "Decay_Rate", "Amp_Source", "Decay_Source", "Variant")
+dfm_wt_2 <- dfm_wt_2 |> dplyr::select(Variant, LPR, Max_Amplitude, Decay_Rate)
+
+# Read in D162A data
+dfm_d162 <- readr::read_csv("assets/data/03_D162A_variant_comparison.csv",
+                           col_names=TRUE, col_types="ccfcfcfcdc")
+colnames(dfm_d162) <- c("Sheet", "SourceID", "Variant", "Substrate", "LPR", "Replicate", "Parameter", "Unit", "Value", "Status")
+dfm_d162 <- dfm_d162 |> tidyr::pivot_wider(id_cols=c(SourceID, Replicate, Variant, LPR), names_from=Parameter, values_from=Value)
+colnames(dfm_d162) <- c("SourceID", "Replicate", "Variant", "LPR", "Max_Amplitude", "Decay_Rate")
+dfm_d162 <- dfm_d162 |> dplyr::select(Variant, LPR, Max_Amplitude, Decay_Rate)
+
+# Read in H170 variant data
+dfm_h170 <- readr::read_csv("assets/data/04_H170_variant_comparison.csv",
+                        col_names=TRUE, col_types="cfcfffcfd") |>
+  dplyr::mutate(LPR = stringr::str_c("LPR", LPR))
+dfm_h170$LPR <- factor(dfm_h170$LPR, levels=c("LPR5", "LPR10"))
+colnames(dfm_h170) <- c("Series", "Variant", "Substrate", "Condition", "LPR", "Parameter", "Unit", "ReplicateID", "Value")
+dfm_h170 <- dfm_h170 |>
+  dplyr::select(Variant, ReplicateID, Condition, LPR, Parameter, Value) |>
+  tidyr::pivot_wider(id_cols=c(Variant, ReplicateID, Condition, LPR),
+                                   names_from=Parameter, values_from=Value) |>
+  dplyr::filter(Variant != "WT")
+colnames(dfm_h170) <- c("Variant", "ReplicateID", "Condition", "LPR", "Max_Amplitude", "Decay_Rate")
+
+# Show interactive tables of data
+DT::datatable(dfm_wt_1, options=list(pageLength=5))
+DT::datatable(dfm_wt_2, options=list(pageLength=5))
+DT::datatable(dfm_d162, options=list(pageLength=5))
+DT::datatable(dfm_h170, options=list(pageLength=5))
+```
 
 ## Reporting Problems Or Making Suggestions
 
