@@ -1,0 +1,21 @@
+---
+title: "Supplementary Online Information for Henderson _et al._ (2026)"
+image: ./assets/images/sipbs_compbio.png
+about:
+  template: trestles
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/sipbs/SI_Henderson_et_al_2026_Amt
+    - icon: envelope
+      text: Email
+      href: mailto:leighton.pritchard@strath.ac.uk
+---
+
+## About These Pages
+
+This site is provided to enable reproduction and independent exploration of the statistical analyses reported in Henderson _et al._ (2026).
+
+## Reporting Problems Or Making Suggestions
+
+Please report any issues, problems, or suggested enhancements [at the issues page]({{< var github.issues >}})
