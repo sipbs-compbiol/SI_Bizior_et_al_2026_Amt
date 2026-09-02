@@ -32,7 +32,7 @@ Data files for this analysis can be downloaded from the links below:
 - [`03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv): data for the `D162A` variant
 - [`04_H170_variant_comparison.csv`](assets/data/04_H170_variant_comparison.csv): data for `H170` variants
 
-We present these datasets in @tbl-load-data.
+The datasets are presented in @tbl-load-data.
 
 ```{r}
 #| label: tbl-load-data
