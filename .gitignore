@@ -1,0 +1,14 @@
+# R cruft
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto cruft
+/.quarto/
+**/*.quarto_ipynb
+_freeze/
+_site/
+
+# macOS cruft
+.DS_Store
