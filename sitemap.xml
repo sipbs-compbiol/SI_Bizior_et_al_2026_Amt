@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://sipbs-compbiol.github.io/SI_Henderson_et_al_2026_Amt/wt_controls.html</loc>
+    <lastmod>2026-09-03T09:26:57.875Z</lastmod>
+  </url>
+  <url>
     <loc>https://sipbs-compbiol.github.io/SI_Henderson_et_al_2026_Amt/about.html</loc>
-    <lastmod>2026-09-02T17:06:51.628Z</lastmod>
+    <lastmod>2026-09-03T09:26:57.873Z</lastmod>
   </url>
   <url>
     <loc>https://sipbs-compbiol.github.io/SI_Henderson_et_al_2026_Amt/index.html</loc>
-    <lastmod>2026-09-02T17:06:51.629Z</lastmod>
+    <lastmod>2026-09-03T09:26:57.875Z</lastmod>
   </url>
 </urlset>
