@@ -9,8 +9,14 @@ Depends:
     R (>= 4.6.0)
 Imports:
     tidyverse (>= 2.0.0),
+    emmeans,
     ggplot2,
     ggpubr,
+    gtsummary,
+    parameters,
+    performance,
+    rstatix,
+    sandwich,
     see,
     broom.helpers
 Suggests:

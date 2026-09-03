@@ -203,7 +203,6 @@ EMM_k <- as.data.frame(pairs(emmeans::emmeans(model1_k_lm, ~ Series | LPR,
   dplyr::mutate(y.position=90) |>
   rstatix::add_significance()
 
-
 p1_amp_annot <- p1_amp +
   ggpubr::stat_pvalue_manual(EMM_amp, label="p = {scales::pvalue(p.value)}", size=3)
 
