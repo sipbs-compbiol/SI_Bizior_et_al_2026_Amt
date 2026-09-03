@@ -22,6 +22,8 @@ website:
         menu:
         - href: wt_controls.qmd
           text: WT Control Equivalence
+        - href: figure_1.qmd
+          text: Manuscript Figure 1
       - href: about.qmd
         text: About
   page-footer: 

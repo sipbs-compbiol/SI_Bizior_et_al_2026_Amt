@@ -1,0 +1,278 @@
+---
+title: "Figure 1: `WT` maximum amplitudes and decay rate constants"
+---
+
+Manuscript figure 1 uses three subfigures to show `WT` maximum amplitude and decay rate constant variation over `LPR5`, `LPR10`, and `LPR50` for the `H2O` condition (figure 1B); `WT` maximum amplitude variation over `LPR5` and `LPR10` for `H2O`, `D2O`, and `H2O>D2O` conditions (figure 1D); and `WT` maximum amplitude and decay rate constant variation over `LPR5`, `LPR10`, and `LPR50` for `D2O` experiments (figure 1F).
+
+## The Dataset
+
+We begin with the `WT raw data for figure 1.csv` dataset (@tbl-q2-compose).
+
+```{r}
+#| label: tbl-q2-compose
+#| tbl-cap: "Measurements for `WT` across `H2O`, `D2O` and `D2O>H2O` conditions for three values of `LPR`: `LPR5`, `LPR10` and `LPR50`" 
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+dfm_wt_1 <- dfms$dfm_wt_1
+
+# Show interactive tables of data
+DT::datatable(dfm_wt_1)
+```
+
+We visualise the datasets in the style of figure 1 in @fig-q2-overview.
+
+```{r}
+#| label: fig-q2-overview
+#| fig-cap: "WT measurements across three `LPR`s and three experimental conditions, representing figures 1B, 1D, and 1F from the draft manuscript."
+#| fig-width: 10
+#| fig-height: 15
+
+p1b_amp <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(Condition == "H2O"), 
+                           ggplot2::aes(x=LPR, y=Max_Amplitude, color=LPR)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::theme_minimal()
+
+p1b_k <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(Condition == "H2O"), 
+                         ggplot2::aes(x=LPR, y=Decay_Rate, color=LPR)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::theme_minimal()
+
+p1d_amp <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(LPR %in% c("LPR5", "LPR10")), 
+                           ggplot2::aes(x=Condition, y=Max_Amplitude, color=Condition)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::theme_minimal() +
+  ggplot2::facet_wrap(~LPR)
+
+p1d_k <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(LPR %in% c("LPR5", "LPR10")), 
+                         ggplot2::aes(x=Condition, y=Decay_Rate, color=Condition)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::theme_minimal() +
+  ggplot2::facet_wrap(~LPR)
+
+p1f_amp <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(Condition == "D2O"), 
+                           ggplot2::aes(x=LPR, y=Max_Amplitude, color=LPR)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::theme_minimal()
+
+p1f_k <- ggplot2::ggplot(dfm_wt_1 |> dplyr::filter(Condition == "D2O"), 
+                         ggplot2::aes(x=LPR, y=Decay_Rate, color=LPR)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::theme_minimal()
+
+ggpubr::ggarrange(p1b_amp, p1b_k, p1d_amp, p1d_k, p1f_amp, p1f_k,
+                  ncol=2, nrow=3,
+                  labels=c("B", "", "D", "", "F", ""),
+                  legend="none")
+```
+
+### The Questions
+
+We have multiple questions for this dataset. Within each of the six plots we wish to present the effects of the parameters plotted along the _x_-axis, for each measurement.
+
+### The Models
+
+We address these questions using a separate linear model for each set of figure data. For figures 1B and 1F we treat maximum amplitude and decay rate constant as dependent variables, and fit these to the `LPR` explanatory variable (`Value ~ LPR`). For figure 1D we proceed in a similar way, but separately fit maximum amplitude values for `LPR5` and `LPR10` to the `Condition` explanatory variable (`Max_Amplitude ~ Condition`).
+
+```{r}
+#| label: fig-q2-model
+#| fig-cap: "Diagnostic plots for linear model fits of `Value ~ LPR` and `Max_amplitude ~ Condition`" 
+#| fig-subcap:
+#|    - "Figure 1B(i)"
+#|    - "Figure 1B(ii)"
+#|    - "Figure 1D(i)"
+#|    - "Figure 1D(ii)"
+#|    - "Figure 1F(i)"
+#|    - "Figure 1F(ii)"
+#| fig-width: 10
+#| fig-height: 10
+#| layout-ncol: 2
+
+model1b_amp_lm <- lm(Max_Amplitude ~ LPR, data=dfm_wt_1 |> dplyr::filter(Condition == "H2O"))
+model1b_k_lm <- lm(Decay_Rate ~ LPR, data=dfm_wt_1 |> dplyr::filter(Condition == "H2O"))
+
+model1d_lpr5_lm <- lm(Max_Amplitude ~ Condition, data=dfm_wt_1 |> dplyr::filter(LPR == "LPR5"))
+model1d_lpr10_lm <- lm(Max_Amplitude ~ Condition, data=dfm_wt_1 |> dplyr::filter(LPR == "LPR10"))
+
+model1f_amp_lm <- lm(Max_Amplitude ~ LPR, data=dfm_wt_1 |> dplyr::filter(Condition == "D2O"))
+model1f_k_lm <- lm(Decay_Rate ~ LPR, data=dfm_wt_1 |> dplyr::filter(Condition == "D2O"))
+
+performance::check_model(model1b_amp_lm, size_title=6)
+performance::check_model(model1b_k_lm, size_title=6)
+performance::check_model(model1d_lpr5_lm, size_title=6)
+performance::check_model(model1d_lpr10_lm, size_title=6)
+performance::check_model(model1f_amp_lm, size_title=6)
+performance::check_model(model1f_k_lm, size_title=6)
+```
+
+There are no obvious departures from assumptions in @fig-q2-model, although some of the diagnostic plots do have odd spline fits. We extract the contrasts in @tbl-q2-contrasts.
+
+```{r}
+#| label: tbl-q2-contrasts
+#| tbl-cap: "Contrasts for model fits" 
+#| tbl-subcap:
+#|    - "Figure 1B(i): Maximum amplitude, H2O"
+#|    - "Figure 1B(ii): Decay rate, H2O"
+#|    - "Figure 1D(i): Maximum amplitude, LPR5"
+#|    - "Figure 1D(ii): Maximum amplitude, LPR10"
+#|    - "Figure 1F(i): Maximum amplitude, D2O"
+#|    - "Figure 1F(ii): Decay rate, D2O"
+#| layout-ncol: 1
+
+EMM <- emmeans::emmeans(model1b_amp_lm, ~ LPR)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1b_k_lm, ~ LPR)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1d_lpr5_lm, ~ Condition)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1d_lpr10_lm, ~ Condition)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1f_amp_lm, ~ LPR)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1f_k_lm, ~ LPR)
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+```
+
+The following contrasts are indicated not to include zero in their 95% confidence interval (estimates in @tbl-q2-contrasts), which we interpret as indicating an effect due to differing lipid-protein ratio:
+
+- `WT` Maximum amplitude, `H2O`: `LPR5-LPR10` (0.762nA [0.328,1.20]), `LPR10-LPR50` (0.648nA [0.166, 1.13]), `LPR5-LPR50` (1.41nA [0.947,1.87])
+- `WT` Decay rate, `H2O`: `LPR5-LPR10` (23.5.s [1.65,45.3]), `LPR5-LPR50` (44.0/s [20.7,67.3])
+- `WT` Maximum amplitude, `LPR5`: `H2O-D2O` (0.832nA [0.454,1.21]), `D2O-D2O>H2O` (-0.685nA [-1.11,-0.259])
+- `WT` Decay rate, `LPR10`: no contrasts show significant difference
+- `WT` Maximum amplitude, `D2O`: `LPR5-LPR10` (0.232nA [0.006,0.458]), `LPR10-LPR50` (0.481nA [0.218,0.743]), `LPR5-LPR50` (0.713nA [0.458,0.968])
+- `WT` Decay rate, `D2O`: `LPR5-LPR10` (33.6/s [20.8,46.4]), `LPR5-LPR50` (51.3/s [37.0,65.7]), `LPR10-LPR50` (17.7/s [2.94,32.5])
+
+We can plot these differences in the style of the manuscript as in @fig-q2-pubfig
+
+```{r}
+#| label: fig-q2-pubfig
+#| fig-cap: "WT measurements across three LPRs and three experimental conditions, representing figures 1B, 1D, and 1F from the draft manuscript. , with Sidak-adjusted _p_-values indicated" 
+#| fig-subcap:
+#|    - "Figure 1B(i)"
+#|    - "Figure 1B(ii)"
+#|    - "Figure 1D(i)"
+#|    - "Figure 1D(ii)"
+#|    - "Figure 1F(i)"
+#|    - "Figure 1F(ii)"
+#| fig-width: 10
+#| fig-height: 15
+
+# Get p-values, accounting for heteroscedasticity and multiple testing
+# Also generate group1 and group2 columns
+EMM_amp_b <- as.data.frame(pairs(emmeans::emmeans(model1b_amp_lm, ~ LPR),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance()
+
+EMM_k_b <- as.data.frame(pairs(emmeans::emmeans(model1b_k_lm, ~ LPR),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=90) |>
+  rstatix::add_significance()
+
+EMM_lpr5_d <- as.data.frame(pairs(emmeans::emmeans(model1d_lpr5_lm, ~ Condition),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance() |>
+  dplyr::mutate(LPR="LPR5")
+
+EMM_lpr10_d <- as.data.frame(pairs(emmeans::emmeans(model1d_lpr10_lm, ~ Condition),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance() |>
+  dplyr::mutate(LPR="LPR10")
+
+EMM_d <- rbind(EMM_lpr5_d, EMM_lpr10_d)
+EMM_d$LPR <- factor(EMM_d$LPR, levels=c("LPR5", "LPR10"))
+
+EMM_amp_f <- as.data.frame(pairs(emmeans::emmeans(model1f_amp_lm, ~ LPR),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance()
+
+EMM_k_f <- as.data.frame(pairs(emmeans::emmeans(model1f_k_lm, ~ LPR),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=90) |>
+  rstatix::add_significance()
+
+p1b_amp_annot <- p1b_amp +
+  ggpubr::stat_pvalue_manual(EMM_amp_b,
+                             label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+
+p1b_k_annot <- p1b_k +
+  ggpubr::stat_pvalue_manual(EMM_k_b, 
+                             label="p = {scales::pvalue(p.value)}", 
+                             size=3, step.increase=0.1)
+
+p1d_annot <- p1d_amp +
+  ggpubr::stat_pvalue_manual(EMM_d,
+                             label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+
+p1f_amp_annot <- p1f_amp +
+  ggpubr::stat_pvalue_manual(EMM_amp_f,
+                             label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+
+p1f_k_annot <- p1f_k +
+  ggpubr::stat_pvalue_manual(EMM_k_f, 
+                             label="p = {scales::pvalue(p.value)}", 
+                             size=3, step.increase=0.1)
+
+ggpubr::ggarrange(p1b_amp_annot, p1b_k_annot, p1d_annot,
+                          patchwork::plot_spacer(), p1f_amp_annot, p1f_k_annot,
+                          ncol=2, nrow=3,
+                          labels=c("B", "", "D", "", "F", ""),
+                          legend="none")
+```
+
+- [Download as .pdf](assets/images/fig01_WT_across_three_conditions_and_LPRs.pdf)
+- [Download as .png](assets/images/fig01_WT_across_three_conditions_and_LPRs.png)
