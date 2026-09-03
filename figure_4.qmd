@@ -6,7 +6,7 @@ Figure 4 uses panel B to display maximum amplitude and decay rate constants for 
 
 ## The Dataset
 
-The data for this graph is provided in `WT Raw data for figure 2 and 4.csv` and `NeRh50 raw values for Leighton.csv` for `WT` and the three `H170` variants, and we comobine these in @tbl-q4-compose.
+The data for this graph is provided in `02_WT_variant_comparison.csv` and `04_H170_variant_comparison.csv` for `WT` and the three `H170` variants, and we comobine these in @tbl-q4-compose.
 
 ```{r}
 #| label: tbl-q4-compose
@@ -114,6 +114,7 @@ gtsummary::tbl_regression(model4_k_lm)
 ```
 
 The model fits in @tbl-q4-model indicate that there are no important interaction effects for either maximum amplitude or decay rate constant. 
+
 The models indicate a difference in maximum amplitude between `LPR5` and `LPR10` (-0.93nA [-1.3, -0.58]), and between `WT` and `H170A` (-0.58nA [-0.96, -0.20]), but not between `WT` and `H170D` or `H170E`.
 They also indicate a difference in decay rate constant between `LPR5` and `LPR10` (-11/s [-16, -7.2]), and between `WT` and all three `H170` variants (a reduction in decay rate constant): `H170A`, -8.5/s [-13, -3.9]; `H170D` -13/s [-17, -8.8]; `H170E`, -20/s [-25, -16].
 
@@ -138,7 +139,7 @@ On the whole the diagnostic plots do not indicate issues, except for the `LPR:Va
 
 ```{r}
 #| label: tbl-q4-contrasts
-#| tbl-cap: "Contrasts for model fits" 
+#| tbl-cap: "Contrasts for model fits, with Sidak adjustment" 
 #| tbl-subcap:
 #|   - "Maximum amplitude: change `LPR`, constant `Variant`"
 #|   - "Decay rate: change `LPR`, constant `Variant`"
@@ -160,7 +161,7 @@ confint(emmeans::contrast(EMM2, "pairwise", adjust="sidak")) |>
 
 ```
 
-Restricting interpretation to the contrasts in draft manuscript figure 4, we find the following robustly nonzero differences:
+Restricting interpretation to the contrasts in manuscript figure 4, we find the following robustly nonzero differences for `LPR` changes:
 
 - Maximum amplitude decreases for `H170A` by 0.459nA [0.0186,0.900] from `LPR5` to `LPR10`
 - Maximum amplitude decreases for `H170D` by 0.810nA [0.359,1.27] from `LPR5` to `LPR10`
@@ -175,7 +176,7 @@ We visualise this with $p$-values in @fig-q4-pubfig, which we interpret as the c
 
 ```{r warning=FALSE}
 #| label: fig-q4-pubfig
-#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript , with _p_-values indicated" 
+#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript , with Sidak-adjusted _p_-values indicated" 
 
 # Get p-values, accounting for heteroscedasticity and multiple testing
 # Also generate group1 and group2 columns
