@@ -26,6 +26,10 @@ dfm_fig2$intact <- factor(dfm_fig2$intact, levels=c("LPR5.WT", "LPR5.D162A", "LP
 DT::datatable(dfm_fig2)
 ```
 
+- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
+- [Download `03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv)
+- [Download `fig2.csv` combined dataset](assets/data/fig2.csv)
+
 We visualise the dataset in the style of figure 2, in @fig-q3-overview.
 
 ```{r warning=FALSE}

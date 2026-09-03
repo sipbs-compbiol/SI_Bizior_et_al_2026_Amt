@@ -76,6 +76,11 @@ Visually we might expect from @fig-q1-overview that the means of maximum amplitu
 
 An apparent difference in decay rate at `LPR5` may induce an interaction effect in any linear model fit. There also appears, visually, to be a difference in variance (heteroscedasticity) between the two series: `Series 2` looks to have greater variance than `Series 1`.
 
+- [Download `01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv)
+- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
+- [Download `wt_controls.csv` combined dataset](assets/data/wt_controls.csv)
+
+
 ### The Question
 
 Our central question is whether there is a nonzero effect on maximum amplitude or decay rate constant in `WT`, conditioned on `LPR` value, due to the choice of `Series`

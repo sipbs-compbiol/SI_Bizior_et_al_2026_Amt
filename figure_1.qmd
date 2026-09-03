@@ -21,6 +21,8 @@ dfm_wt_1 <- dfms$dfm_wt_1
 DT::datatable(dfm_wt_1)
 ```
 
+- [Download `01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv)
+
 We visualise the datasets in the style of figure 1 in @fig-q2-overview.
 
 ```{r}

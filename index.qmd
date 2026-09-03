@@ -15,17 +15,22 @@ toc: false
 
 ## Introduction
 
-This site is provided to enable reproduction and independent exploration of the statistical analyses reported in Henderson _et al._ (2026).
+This site provides supplementary information to help enable reproduction and independent exploration of the statistical analyses reported in Henderson _et al._ (2026).
 
-These pages describe linear regression modelling for the manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve." We analyse this data to establish evidence in support of answers to the following key questions:
+The pages in the `Analyses` section describe regression modelling for the manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve" by Henderson _et al._ We analyse this data to establish evidence in support of answers to the following key questions:
 
 1. Whether the two `WT` control datasets from solvent-exchange and variant comparison can be pooled.
-2. Whether, in the `H2O` condition, there are effects on maximum amplitude or decay rate constant due to lipid-protein ratio or `D162A` substitution.
-3. Whether there are effects on maximum amplitude or decay rate constant due to `H170` substitution.
+2. Whether, in the `H2O` condition, there are effects on maximum amplitude or decay rate constant due to changes in lipid-protein ratio or the `D162A` amino acid substitution.
+3. Whether there are effects on maximum amplitude or decay rate constant due to `H170` amino acid substitutions.
 
 ## Getting Started
 
-The analysis is presented across four pages.
+The analysis is presented across four pages:
+
+- [`WT` control comparisons](wt_controls.qmd)
+- [Figure 1](figure_1.qmd)
+- [Figure 2](figure_2.qmd)
+- [Figure 4](figure_4.qmd)
 
 ## Datasets
 
