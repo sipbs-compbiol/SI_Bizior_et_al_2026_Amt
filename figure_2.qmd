@@ -1,0 +1,188 @@
+---
+title: "Figure 2: Comparison of `WT` and `D162` variants"
+---
+
+Figure 2 in the manuscript uses panels C and E to show the distribution of maximum amplitude and decay rate between `LPR5` and `LPR10` for `WT` and `D162` variants.
+
+## The Dataset
+
+The data for this graph is drawn from two files: `WT Raw data for figure 2 and 4.csv` for the `WT` data (summary data removed with respect to the originating Excel file), and `NeRh50 D162A  raw values for Leighton.csv` for the `D162A` data. We combine these and generate a new column with interaction labels for `LPR` and `Variant` to obtain @tbl-q3-compose.
+
+```{r}
+#| label: tbl-q3-compose
+#| tbl-cap: "Measurements for `WT` and `D162A` across `LPR5` and `LPR10` for maximum amplitude and decay rate constant." 
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+# Join the dataframes
+dfm_fig2 <- rbind(dfms$dfm_wt_2, dfms$dfm_d162) |>
+  dplyr::filter(LPR %in% c("LPR5", "LPR10")) |>
+  dplyr::mutate(intact = interaction(LPR, Variant))
+dfm_fig2$intact <- factor(dfm_fig2$intact, levels=c("LPR5.WT", "LPR5.D162A", "LPR10.WT", "LPR10.D162A"))
+
+# Show interactive tables of data
+DT::datatable(dfm_fig2)
+```
+
+We visualise the dataset in the style of figure 2, in @fig-q3-overview.
+
+```{r warning=FALSE}
+#| label: fig-q3-overview
+#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 2C and 2E from the draft manuscript"
+
+# Visualise datasets as box/whisker with superimposed datapoints
+p2_amp <- ggplot2::ggplot(dfm_fig2, ggplot2::aes(x=intact, y=Max_Amplitude, color=Variant)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::theme_minimal()
+
+p2_k <- ggplot2::ggplot(dfm_fig2, ggplot2::aes(x=intact, y=Decay_Rate, color=Variant)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant k (/s)", x="") +
+  ggplot2::theme_minimal()
+
+
+ggpubr::ggarrange(p2_amp, p2_k,
+                  common.legend=TRUE,
+                  labels=c("C", "E"))
+```
+
+## The Question
+
+We have multiple questions for this dataset. Within each plot we wish to determine any effects of changing `Variant`, and of changing `LPR`.
+
+## The Models
+
+We fit linear models separately to the maximum amplitude and decay constant datasets, treating `LPR` and `Variant` as explanatory variables. Initially we fit a model with interactions `Value ~ LPR * Variant`.
+
+```{r}
+#| label: fig-q3-model
+#| fig-cap: "Diagnostic checks for linear model fits of `Value ~ LPR * Variant`" 
+#| fig-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| fig-height: 10
+#| layout-ncol: 2
+
+model2_amp_lm <- lm(Max_Amplitude ~ LPR * Variant, data=dfm_fig2)
+model2_k_lm <- lm(Decay_Rate ~ LPR * Variant, data=dfm_fig2)
+
+performance::check_model(model2_amp_lm, size_title=6)
+performance::check_model(model2_k_lm, size_title=6)
+```
+
+There are no major concerns in the @fig-q3-model diagnostic plots other than heteroscedasticity, and we extract the contrasts taking this into account, in @tbl-q3-contrasts.
+
+```{r}
+#| label: tbl-q3-contrasts
+#| tbl-cap: "Contrasts for model fits" 
+#| tbl-subcap:
+#|   - "Maximum amplitude: change `LPR`, constant `Variant`"
+#|   - "Maximum amplitude: change `Variant`, constant `LPR`"
+#|   - "Decay rate: change `LPR`, constant `Variant`"
+#|   - "Decay rate: change `Variant`, constant `LPR`"
+#| layout-ncol: 1
+
+EMM1 <- emmeans::emmeans(model2_amp_lm, ~ LPR | Variant,
+                        vcov=sandwich::vcovHC(model2_amp_lm))
+confint(emmeans::contrast(EMM1, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM2 <- emmeans::emmeans(model2_amp_lm, ~ Variant | LPR,
+                        vcov=sandwich::vcovHC(model2_amp_lm))
+confint(emmeans::contrast(EMM2, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM3 <- emmeans::emmeans(model2_k_lm, ~ LPR | Variant,
+                        vcov=sandwich::vcovHC(model2_k_lm))
+confint(emmeans::contrast(EMM3, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM4 <- emmeans::emmeans(model2_k_lm, ~ Variant | LPR,
+                        vcov=sandwich::vcovHC(model2_k_lm))
+confint(emmeans::contrast(EMM4, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+```
+
+From @tbl-q3-contrasts we see that maximum amplitude falls from `LPR5` to `LPR10` for both `WT` (by -0.931nA [-1.09,-0.769]) and `D162A` (by -0.182nA [-0.349,-0.0155]), but decay rate constant changes only for `WT` (by -11.4/s [-13.8,-8.92]).
+
+From the same table we see also that, at `LPR5`, `D162A` has a lower maximum amplitude than `WT` (by -0.892nA [-1.07,-0.711]), but the maximum amplitudes are equivalent at `LPR10`. While there is no difference between `WT` and `D162A` decay rate constants at `LPR5`, the decay rate constant is greater for `D162A` at `LPR10` (by 10.5/s [1.45,19.6])
+
+The following contrasts are indicated not to include zero in their 95% confidence interval (estimates in @tbl-q3-contrasts), which we interpret as an effect due either to modifying `LPR` or by introducing the `D162A` substitution:
+
+- `WT` maximum amplitude decreases by -0.931nA [-1.09,-0.769] from `LPR5` to `LPR10`
+- `WT` decay rate constant decreases by -11.4/s [-13.8,-8.92] from `LPR5` to `LPR10`
+- `D162` maximum amplitude decreases by -0.182nA [-0.349,-0.0155] from `LPR5` to `LPR10`
+- At `LPR5`, `D162A` has a lower maximum amplitude than `WT` by -0.892nA [-1.07,-0.711]
+- At `LPR10`, `D162A` has a higher decay rate constant by 10.5/s [1.45,19.6]
+
+## Figure
+
+We visualise this in @fig-q3-pubfig.
+
+```{r warning=FALSE}
+#| label: fig-q3-pubfig
+#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 2C and 2E from the draft manuscript, with _p_-values indicated" 
+
+# Get p-values, accounting for heteroscedasticity and multiple testing
+# Also generate group1 and group2 columns
+EMMp1 <- as.data.frame(pairs(EMM1)) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(group1 = paste0(group1, ".", Variant)) |>
+  dplyr::mutate(group2 = paste0(group2, ".", Variant)) |>
+  dplyr::select(!Variant)
+EMMp2 <- as.data.frame(pairs(EMM2)) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(group1 = paste0(LPR, ".", group1)) |>
+  dplyr::mutate(group2 = paste0(LPR, ".", group2)) |>
+  dplyr::select(!LPR)
+EMMp3 <- as.data.frame(pairs(EMM3))  |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(group1 = paste0(group1, ".", Variant)) |>
+  dplyr::mutate(group2 = paste0(group2, ".", Variant)) |>
+  dplyr::select(!Variant)
+EMMp4 <- as.data.frame(pairs(EMM4))  |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(group1 = paste0(LPR, ".", group1)) |>
+  dplyr::mutate(group2 = paste0(LPR, ".", group2)) |>
+  dplyr::select(!LPR)
+
+EMM_amp <- rbind(EMMp1, EMMp2)  |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance()
+EMM_k <- rbind(EMMp3, EMMp4) |>
+  dplyr::mutate(y.position=90) |>
+  rstatix::add_significance()
+
+p2_amp_annot <- p2_amp +
+  ggpubr::stat_pvalue_manual(EMM_amp, label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1) + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p2_k_annot <- p2_k +
+  ggpubr::stat_pvalue_manual(EMM_k, label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1) + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+ggpubr::ggarrange(p2_amp_annot, p2_k_annot,
+                          labels=c("C", "E"))
+```
+
+- [Download as .pdf](assets/images/fig02_WT_in_D20.pdf)
+- [Download as .png](assets/images/fig02_WT_in_D20.png)

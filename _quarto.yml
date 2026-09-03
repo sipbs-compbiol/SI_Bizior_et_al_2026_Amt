@@ -24,6 +24,8 @@ website:
           text: WT Control Equivalence
         - href: figure_1.qmd
           text: Manuscript Figure 1
+        - href: figure_2.qmd
+          text: Manuscript Figure 2
       - href: about.qmd
         text: About
   page-footer: 
