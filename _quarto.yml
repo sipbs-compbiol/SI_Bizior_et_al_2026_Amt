@@ -4,15 +4,15 @@ project:
     port: 4909
 
 website:
-  title: "Supplementary Information for Henderson _et al._ (2026)"
-  site-url: https://sipbs-compbiol.github.io/SI_Henderson_et_al_2026_Amt/
-  description: "Supplementary Information for Henderson _et al._ (2026)"
+  title: "Supplementary Information for Bizior _et al._ (2026)"
+  site-url: https://sipbs-compbiol.github.io/SI_Bizior_et_al_2026_Amt/
+  description: "Supplementary Information for Bizior _et al._ (2026)"
   favicon: "icon_32.png"
   cookie-consent:
     type: express
   open-graph:
     locale: en_GB
-    description: "Supplementary Information for Henderson _et al._ (2026)"
+    description: "Supplementary Information for Bizior _et al._ (2026)"
   navbar:
     logo: ./assets/images/sipbs_compbio.png
     right:
