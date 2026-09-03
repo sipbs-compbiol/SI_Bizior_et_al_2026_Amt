@@ -19,7 +19,8 @@ Imports:
     rstatix,
     sandwich,
     see,
-    broom.helpers
+    broom.helpers,
+    wesanderson
 Suggests:
     knitr,
     sessioninfo

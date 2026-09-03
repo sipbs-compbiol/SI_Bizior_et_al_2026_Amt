@@ -2,6 +2,16 @@
 title: "Figure 4: Comparison of `H170` variants"
 ---
 
+```{r setup}
+#| include: false
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
+```
+
 Figure 4 uses panel B to display maximum amplitude and decay rate constants for each of the `H170` mutants at `LPR5` and `LPR10`.
 
 ## The Dataset
@@ -11,10 +21,6 @@ The data for this graph is provided in `02_WT_variant_comparison.csv` and `04_H1
 ```{r}
 #| label: tbl-q4-compose
 #| tbl-cap: "Measurements for `WT` and `H170` variants across `LPR5` and `LPR10` for maximum amplitude and decay rate constant." 
-
-# Use helper script to load dataframes
-source("assets/r/load_dataframes.R")
-dfms <- load_dataframes()
 
 # Join the dataframes
 dfm_fig4 <- rbind(dfms$dfm_wt_2, dfms$dfm_h170 |> dplyr::select(colnames(dfms$dfm_wt_2))) |>

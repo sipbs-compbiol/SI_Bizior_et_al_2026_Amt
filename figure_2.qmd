@@ -2,6 +2,16 @@
 title: "Figure 2: Comparison of `WT` and `D162` variants"
 ---
 
+```{r setup}
+#| include: false
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
+```
+
 Figure 2 in the manuscript uses panels C and E to show the distribution of maximum amplitude and decay rate between `LPR5` and `LPR10` for `WT` and `D162` variants.
 
 ## The Dataset
@@ -11,10 +21,6 @@ The data for this graph is drawn from two files: `WT Raw data for figure 2 and 4
 ```{r}
 #| label: tbl-q3-compose
 #| tbl-cap: "Measurements for `WT` and `D162A` across `LPR5` and `LPR10` for maximum amplitude and decay rate constant." 
-
-# Use helper script to load dataframes
-source("assets/r/load_dataframes.R")
-dfms <- load_dataframes()
 
 # Join the dataframes
 dfm_fig2 <- rbind(dfms$dfm_wt_2, dfms$dfm_d162) |>

@@ -2,6 +2,17 @@
 title: "Figure 1: `WT` maximum amplitudes and decay rate constants"
 ---
 
+```{r setup}
+#| include: false
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+dfm_wt_1 <- dfms$dfm_wt_1
+
+options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
+```
+
 Manuscript figure 1 uses three subfigures to show `WT` maximum amplitude and decay rate constant variation over `LPR5`, `LPR10`, and `LPR50` for the `H2O` condition (figure 1B); `WT` maximum amplitude variation over `LPR5` and `LPR10` for `H2O`, `D2O`, and `H2O>D2O` conditions (figure 1D); and `WT` maximum amplitude and decay rate constant variation over `LPR5`, `LPR10`, and `LPR50` for `D2O` experiments (figure 1F).
 
 ## The Dataset
@@ -11,11 +22,6 @@ We begin with the `01_WT_solvent_exchange_conditions.csv` dataset (@tbl-q2-compo
 ```{r}
 #| label: tbl-q2-compose
 #| tbl-cap: "Measurements for `WT` across `H2O`, `D2O` and `D2O>H2O` conditions for three values of `LPR`: `LPR5`, `LPR10` and `LPR50`" 
-
-# Use helper script to load dataframes
-source("assets/r/load_dataframes.R")
-dfms <- load_dataframes()
-dfm_wt_1 <- dfms$dfm_wt_1
 
 # Show interactive tables of data
 DT::datatable(dfm_wt_1)

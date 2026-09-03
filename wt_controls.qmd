@@ -2,6 +2,16 @@
 title: "`WT` Control Series Equivalence"
 ---
 
+```{r setup}
+#| include: false
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
+```
+
 Two wild-type/`WT` datasets were collected, one as part of (i) the solvent-exchange experiment series, and (ii) for the mutant experiment series.
 
 Our question can be phrased as:
