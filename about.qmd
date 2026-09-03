@@ -2,8 +2,16 @@
 title: "About"
 ---
 
-About this site
+The data in this manuscript were collected and analysed by the manuscript authors.
 
-```{r}
-1 + 1
-```
+- Adriana Bizior (Strathclyde) [ORCID](https://orcid.org/0000-0003-2995-8207)
+- Mingyu Qin (Oxford) [ORCID](https://orcid.org/0009-0006-3507-0430)
+- Peter Henderson (Strathclyde)
+- Benjamin Cooper (Oxford)
+- Daniel E Lacombe (Strathclyde)
+- Paul A Hoskisson (Strathclyde) [ORCID](https://orcid.org/0000-0003-4332-1640), [Google Scholar](https://scholar.google.com/citations?hl=en&user=TIZIt8YAAAAJ)
+- Georgia Isom (Oxford) [ORCID](https://orcid.org/0000-0001-9023-705X), [Google Scholar](https://scholar.google.com/citations?hl=en&user=acaClHYAAAAJ)
+- Leighton Pritchard (Strathclyde) [ORCID]https://orcid.org/0000-0002-8392-2822), [Google Scholar](https://scholar.google.com/citations?hl=en&user=5QhdsWkAAAAJ)
+- Syma Khalid (Oxford) [ORCID](https://orcid.org/0000-0002-3694-5044), [Google Scholar](https://scholar.google.com/citations?hl=en&user=WHQ4M5YAAAAJ)
+- Arnaud Javelle (Strathclyde) [ORCID](https://orcid.org/0000-0002-3611-5737), [Google Scholar](https://scholar.google.com/citations?hl=en&user=_k5PV4QAAAAJ)
+
