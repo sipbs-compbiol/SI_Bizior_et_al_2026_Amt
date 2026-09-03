@@ -1,12 +1,12 @@
 ---
-title: "Supplementary Online Information for Henderson _et al._ (2026)"
+title: "Supplementary Online Information for Bizior _et al._ (2026)"
 image: ./assets/images/sipbs_compbio.png
 about:
   template: trestles
   links:
     - icon: github
       text: Github
-      href: https://github.com/sipbs/SI_Henderson_et_al_2026_Amt
+      href: https://github.com/sipbs/SI_Bizior_et_al_2026_Amt
     - icon: envelope
       text: Email
       href: mailto:leighton.pritchard@strath.ac.uk
@@ -15,9 +15,9 @@ toc: false
 
 ## Introduction
 
-This site provides supplementary information to help enable reproduction and independent exploration of the statistical analyses reported in Henderson _et al._ (2026).
+This site provides supplementary information to help enable reproduction and independent exploration of the statistical analyses reported in Bizior _et al._ (2026).
 
-The pages in the `Analyses` section describe regression modelling for the manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve" by Henderson _et al._ We analyse this data to establish evidence in support of answers to the following key questions:
+The pages in the `Analyses` section describe regression modelling for the manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve" by Bizior _et al._ We analyse this data to establish evidence in support of answers to the following key questions:
 
 1. Whether the two `WT` control datasets from solvent-exchange and variant comparison can be pooled.
 2. Whether, in the `H2O` condition, there are effects on maximum amplitude or decay rate constant due to changes in lipid-protein ratio or the `D162A` amino acid substitution.
