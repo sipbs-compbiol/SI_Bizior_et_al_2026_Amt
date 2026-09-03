@@ -1,0 +1,242 @@
+---
+title: "Figure 4: Comparison of `H170` variants"
+---
+
+Figure 4 uses panel B to display maximum amplitude and decay rate constants for each of the `H170` mutants at `LPR5` and `LPR10`.
+
+## The Dataset
+
+The data for this graph is provided in `WT Raw data for figure 2 and 4.csv` and `NeRh50 raw values for Leighton.csv` for `WT` and the three `H170` variants, and we comobine these in @tbl-q4-compose.
+
+```{r}
+#| label: tbl-q4-compose
+#| tbl-cap: "Measurements for `WT` and `H170` variants across `LPR5` and `LPR10` for maximum amplitude and decay rate constant." 
+
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+# Join the dataframes
+dfm_fig4 <- rbind(dfms$dfm_wt_2, dfms$dfm_h170 |> dplyr::select(colnames(dfms$dfm_wt_2))) |>
+  dplyr::filter(LPR %in% c("LPR5", "LPR10"))
+dfm_fig4$Variant <- factor(dfm_fig4$Variant, c("WT", "H170A", "H170D", "H170E"))
+
+# Show interactive tables of data
+DT::datatable(dfm_fig4)
+```
+
+We visualise the dataset in the style of draft figure 4, in @fig-q4-overview.
+
+```{r warning=FALSE}
+#| label: fig-q4-overview
+#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript"
+
+# Visualise datasets as box/whisker with superimposed datapoints
+p4_h170a_amp <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant=="H170A"), 
+                                ggplot2::aes(x=LPR, y=Max_Amplitude, color=LPR))  +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p4_h170a_k <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant == "H170A"), 
+                              ggplot2::aes(x=LPR, y=Decay_Rate, color=LPR))  +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant (/s)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p4_h170d_amp <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant == "H170D"),
+                                ggplot2::aes(x=LPR, y=Max_Amplitude, color=LPR)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p4_h170d_k <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant == "H170D"), 
+                              ggplot2::aes(x=LPR, y=Decay_Rate, color=LPR))  +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant (/s)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p4_h170e_amp <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant == "H170E"), 
+                                ggplot2::aes(x=LPR, y=Max_Amplitude, color=LPR))  +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+p4_h170e_k <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant == "H170E"),
+                              ggplot2::aes(x=LPR, y=Decay_Rate, color=LPR))  +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::labs(y="Decay rate constant (/s)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+  
+ggpubr::ggarrange(p4_h170a_amp, p4_h170a_k, p4_h170d_amp, p4_h170d_k, p4_h170e_amp, p4_h170e_k,
+                  common.legend=TRUE,
+                  labels=c("H170A", "", "H170D", "", "H170E", ""),
+                  nrow=1
+                  )
+```
+
+## The Models
+
+We treat the system as a single experiment with two dependent variables (maximum amplitude and decay rate constant), fitting linear models with `LPR` and `Variant` as explanatory variables. We initially fit the full model `Value ~ LPR * Variant` as in @tbl-q4-model.
+
+```{r}
+#| label: tbl-q4-model
+#| tbl-cap: "Linear model fits of `Value ~ LPR * Variant`" 
+#| tbl-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| layout-ncol: 2
+
+model4_amp_lm <- lm(Max_Amplitude ~ LPR * Variant, data=dfm_fig4)
+model4_k_lm <- lm(Decay_Rate ~ LPR * Variant, data=dfm_fig4)
+
+gtsummary::tbl_regression(model4_amp_lm)
+
+gtsummary::tbl_regression(model4_k_lm)
+```
+
+The model fits in @tbl-q4-model indicate that there are no important interaction effects for either maximum amplitude or decay rate constant. 
+The models indicate a difference in maximum amplitude between `LPR5` and `LPR10` (-0.93nA [-1.3, -0.58]), and between `WT` and `H170A` (-0.58nA [-0.96, -0.20]), but not between `WT` and `H170D` or `H170E`.
+They also indicate a difference in decay rate constant between `LPR5` and `LPR10` (-11/s [-16, -7.2]), and between `WT` and all three `H170` variants (a reduction in decay rate constant): `H170A`, -8.5/s [-13, -3.9]; `H170D` -13/s [-17, -8.8]; `H170E`, -20/s [-25, -16].
+
+We check the model fits in @fig-q4-modelcheck.
+
+```{r}
+#| label: fig-q4-modelcheck
+#| fig-cap: "Diagnostic plots of `Value ~ LPR + Variant` fit"
+#| fig-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| fig-width: 10
+#| fig-height: 10
+#| layout-ncol: 2
+
+performance::check_model(model4_amp_lm, size_title=6)
+
+performance::check_model(model4_k_lm, size_title=6)
+```
+
+On the whole the diagnostic plots do not indicate issues, except for the `LPR:Variant` correlation. However, as this is an interaction term, the collinearity is likely a result of "essential ill-conditioning" and unavoidable. As the interactions are not indicated to have any great effect on the model we proceed with the model as it stands, and extract the contrasts in @tbl-q4-contrasts.
+
+```{r}
+#| label: tbl-q4-contrasts
+#| tbl-cap: "Contrasts for model fits" 
+#| tbl-subcap:
+#|   - "Maximum amplitude: change `LPR`, constant `Variant`"
+#|   - "Decay rate: change `LPR`, constant `Variant`"
+#| layout-ncol: 1
+
+EMM1 <- emmeans::emmeans(model4_amp_lm, ~ LPR | Variant)
+confint(emmeans::contrast(EMM1, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM2 <- emmeans::emmeans(model4_k_lm, ~ LPR | Variant)
+confint(emmeans::contrast(EMM2, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+```
+
+Restricting interpretation to the contrasts in draft manuscript figure 4, we find the following robustly nonzero differences:
+
+- Maximum amplitude decreases for `H170A` by 0.459nA [0.0186,0.900] from `LPR5` to `LPR10`
+- Maximum amplitude decreases for `H170D` by 0.810nA [0.359,1.27] from `LPR5` to `LPR10`
+- Maximum amplitude decreases for `H170E` by 1.22nA [0.835,1.62] from `LPR5` to `LPR10`
+- Decay rate decreases for `H170A` by 9.72/s [3.51,15.9] from `LPR5` to `LPR10`
+- Decay rate decreases for `H170A` by 11.6/s [5.80,17.3] from `LPR5` to `LPR10`
+- Decay rate decreases for `H170A` by 10.3 [5.75,14.8] from `LPR5` to `LPR10`
+
+## Figure
+
+We visualise this with $p$-values in @fig-q4-pubfig, which we interpret as the change from `LPR5` to `LPR10` inducing a significant reduction in maximum amplitude and decay rate constant for all three variants.
+
+```{r warning=FALSE}
+#| label: fig-q4-pubfig
+#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript , with _p_-values indicated" 
+
+# Get p-values, accounting for heteroscedasticity and multiple testing
+# Also generate group1 and group2 columns
+EMM_amp <- as.data.frame(pairs(EMM1)) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=4) |>
+  rstatix::add_significance()
+EMM_k <- as.data.frame(pairs(EMM2)) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=90) |>
+  rstatix::add_significance()
+
+p4_h170a_amp_annot <- p4_h170a_amp + 
+  ggpubr::stat_pvalue_manual(EMM_amp |> dplyr::filter(Variant == "H170A"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1) 
+p4_h170a_k_annot <- p4_h170a_k + 
+  ggpubr::stat_pvalue_manual(EMM_k |> dplyr::filter(Variant == "H170A"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1) 
+p4_h170d_amp_annot <- p4_h170d_amp + 
+  ggpubr::stat_pvalue_manual(EMM_amp |> dplyr::filter(Variant == "H170D"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+p4_h170d_k_annot <- p4_h170d_k + 
+  ggpubr::stat_pvalue_manual(EMM_k |> dplyr::filter(Variant == "H170D"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1) 
+p4_h170e_amp_annot <- p4_h170e_amp + 
+  ggpubr::stat_pvalue_manual(EMM_amp |> dplyr::filter(Variant == "H170E"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+p4_h170e_k_annot <- p4_h170e_k + 
+  ggpubr::stat_pvalue_manual(EMM_k |> dplyr::filter(Variant == "H170E"), label="p = {scales::pvalue(p.value)}",
+                             size=3, step.increase=0.1)
+
+
+ggpubr::ggarrange(p4_h170a_amp_annot, p4_h170a_k_annot,
+                          p4_h170d_amp_annot, p4_h170d_k_annot,
+                          p4_h170e_amp_annot, p4_h170e_k_annot,
+                          common.legend=TRUE,
+                          labels=c("H170A", "", "H170D", "", "H170E", ""), vjust=5,
+                          legend="bottom",
+                          nrow=1)
+```
+
+- [Download as .pdf](assets/images/fig04_H170_mutants.pdf)
+- [Download as .png](assets/images/fig04_H170_mutants.png)
+
+## More Contrasts
+
+There are further contrasts used as evidence in the manuscript text. The question arises whether there is a significant difference between `WT` and `H170` variant maximum amplitude or decay rate constant at `LPR5`, which we explore in @tbl-q4-contrasts-lpr. This indicates a difference in maximum amplitude between `WT` and `H170A` (but not `H170D` or `H170E`), and a difference in decay rate constant between `WT` and all `H170` variants, at `LPR5`.
+
+```{r}
+#| label: tbl-q4-contrasts-lpr
+#| tbl-cap: "Further contrasts for model fits" 
+#| tbl-subcap:
+#|   - "Maximum amplitude: changes between `Variant` at each `LPR`"
+#|   - "Decay rate: changes between `Variant` at each `LPR`"
+#| layout-ncol: 1
+
+EMM1 <- emmeans::emmeans(model4_amp_lm, ~ Variant | LPR)
+confint(emmeans::contrast(EMM1, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM2 <- emmeans::emmeans(model4_k_lm, ~ Variant | LPR)
+confint(emmeans::contrast(EMM2, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+```
