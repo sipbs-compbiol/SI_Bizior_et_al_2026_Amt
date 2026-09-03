@@ -26,10 +26,6 @@ dfm_fig2$intact <- factor(dfm_fig2$intact, levels=c("LPR5.WT", "LPR5.D162A", "LP
 DT::datatable(dfm_fig2)
 ```
 
-- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
-- [Download `03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv)
-- [Download `fig2.csv` combined dataset](assets/data/fig2.csv)
-
 We visualise the dataset in the style of figure 2, in @fig-q3-overview.
 
 ```{r warning=FALSE}
@@ -54,6 +50,13 @@ ggpubr::ggarrange(p2_amp, p2_k,
                   common.legend=TRUE,
                   labels=c("C", "E"))
 ```
+
+### Downloads
+
+- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
+- [Download `03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv)
+- [Download `fig2.csv` combined dataset](assets/data/fig2.csv)
+
 
 ## The Question
 
@@ -187,6 +190,8 @@ p2_k_annot <- p2_k +
 ggpubr::ggarrange(p2_amp_annot, p2_k_annot,
                           labels=c("C", "E"))
 ```
+
+### Downloads
 
 - [Download as .pdf](assets/images/fig02_WT_in_D20.pdf)
 - [Download as .png](assets/images/fig02_WT_in_D20.png)

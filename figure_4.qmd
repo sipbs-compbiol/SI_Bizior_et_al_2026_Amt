@@ -25,10 +25,6 @@ dfm_fig4$Variant <- factor(dfm_fig4$Variant, c("WT", "H170A", "H170D", "H170E"))
 DT::datatable(dfm_fig4)
 ```
 
-- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
-- [Download `04_H170_variant_comparison.csv`](assets/data/04_H170_variant_comparison.csv)
-- [Download `fig4.csv` combined dataset](assets/data/fig4.csv)
-
 We visualise the dataset in the style of draft figure 4, in @fig-q4-overview.
 
 ```{r warning=FALSE}
@@ -90,6 +86,12 @@ ggpubr::ggarrange(p4_h170a_amp, p4_h170a_k, p4_h170d_amp, p4_h170d_k, p4_h170e_a
                   nrow=1
                   )
 ```
+
+### Downloads
+
+- [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
+- [Download `04_H170_variant_comparison.csv`](assets/data/04_H170_variant_comparison.csv)
+- [Download `fig4.csv` combined dataset](assets/data/fig4.csv)
 
 ## The Models
 
@@ -214,6 +216,8 @@ ggpubr::ggarrange(p4_h170a_amp_annot, p4_h170a_k_annot,
                           legend="bottom",
                           nrow=1)
 ```
+
+### Downloads
 
 - [Download as .pdf](assets/images/fig04_H170_mutants.pdf)
 - [Download as .png](assets/images/fig04_H170_mutants.png)

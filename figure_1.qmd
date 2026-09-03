@@ -21,8 +21,6 @@ dfm_wt_1 <- dfms$dfm_wt_1
 DT::datatable(dfm_wt_1)
 ```
 
-- [Download `01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv)
-
 We visualise the datasets in the style of figure 1 in @fig-q2-overview.
 
 ```{r}
@@ -80,6 +78,10 @@ ggpubr::ggarrange(p1b_amp, p1b_k, p1d_amp, p1d_k, p1f_amp, p1f_k,
                   labels=c("B", "", "D", "", "F", ""),
                   legend="none")
 ```
+
+### Downloads
+
+- [Download `01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv)
 
 ## The Questions
 
@@ -277,6 +279,8 @@ ggpubr::ggarrange(p1b_amp_annot, p1b_k_annot, p1d_annot,
                           labels=c("B", "", "D", "", "F", ""),
                           legend="none")
 ```
+
+### Downloads
 
 - [Download as .pdf](assets/images/fig01_WT_across_three_conditions_and_LPRs.pdf)
 - [Download as .png](assets/images/fig01_WT_across_three_conditions_and_LPRs.png)

@@ -2,8 +2,6 @@
 title: "`WT` Control Series Equivalence"
 ---
 
-## Is it appropriate to pool the two `WT` control series?
-
 Two wild-type/`WT` datasets were collected, one as part of (i) the solvent-exchange experiment series, and (ii) for the mutant experiment series.
 
 Our question can be phrased as:
@@ -15,7 +13,7 @@ Essentially, the question asks "can we ascribe a plausible non-zero difference i
 Neither answer, yes or no, would prevent downstream statistical analysis, would inform how we use the control data. 
 The two `WT` datasets will always be reasonable controls for their corresponding experimental series, but if there is no effect ascribable to `Series`, we have some justification for pooling the data. If there is a discernible effect due to `Series` we can incorporate `Series` as an explanatory variable and estimate its effect separately from that of the treatments we are interested in, should we require to pool the data.
 
-### The Dataset
+## The Dataset
 
 We process the `dfm_wt_1` and `dfm_wt_2` (`WT` control) dataframes, to add a column indicating series, and unify the columns (@tbl-q1-compile).
 
@@ -76,16 +74,18 @@ Visually we might expect from @fig-q1-overview that the means of maximum amplitu
 
 An apparent difference in decay rate at `LPR5` may induce an interaction effect in any linear model fit. There also appears, visually, to be a difference in variance (heteroscedasticity) between the two series: `Series 2` looks to have greater variance than `Series 1`.
 
+### Downloads
+
 - [Download `01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv)
 - [Download `02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv)
 - [Download `wt_controls.csv` combined dataset](assets/data/wt_controls.csv)
 
 
-### The Question
+## The Question
 
 Our central question is whether there is a nonzero effect on maximum amplitude or decay rate constant in `WT`, conditioned on `LPR` value, due to the choice of `Series`
 
-### The Model
+## The Model
 
 We address the question using a linear model, treating `LPR` and `Series` as main effects. As we suspect from @fig-q1-overview that the effects of `Series` may not be independent of `LPR`, we use a linear model with interactions.
 
@@ -111,7 +111,7 @@ The model fit indicates no effect on maximum amplitude due to the `Series` (-0.2
 
 There is, for both models, no strong evidence of an interaction effect due to the way `Series` _interacts with_ `LPR`.
 
-### Checking Assumptions
+## Checking Assumptions
 
 We have so far only assumed that our data are suitable for linear modelling. We check whether the data meet requirements in @fig-q1-modelcheck.
 
@@ -186,7 +186,7 @@ confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
 
 The contrasts in @tbl-q1-contrasts indicate that there is no difference in maximum amplitude associated with `Series` at either `LPR`. There is also no difference in decay rate between the two series at `LPR10`, but at `LPR5` an difference is seen (-15.3/s [-27.8,-2.76]).
 
-### Figure
+## Figure
 
 We present these relationships as in the manuscript, in @fig-q1-pubfig.
 
@@ -217,6 +217,8 @@ p1_k_annot <- p1_k +
 
 ggpubr::ggarrange(p1_amp_annot, p1_k_annot)
 ```
+
+### Downloads
 
 - [Download as .pdf](assets/images/fig00_WT_measurements_for_two_series_with_stats.pdf)
 - [Download as .png](assets/images/fig00_WT_measurements_for_two_series_with_stats.png)
