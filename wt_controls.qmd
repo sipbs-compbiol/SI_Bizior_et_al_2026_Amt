@@ -26,6 +26,7 @@ We process the `dfm_wt_1` and `dfm_wt_2` (`WT` control) dataframes, to add a col
 #|   - "Maximum amplitude"
 #|   - "Decay rate"
 #| layout-ncol: 1
+
 # Use helper script to load dataframes
 source("assets/r/load_dataframes.R")
 dfms <- load_dataframes()
