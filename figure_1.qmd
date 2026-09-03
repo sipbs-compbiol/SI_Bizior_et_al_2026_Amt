@@ -6,7 +6,7 @@ Manuscript figure 1 uses three subfigures to show `WT` maximum amplitude and dec
 
 ## The Dataset
 
-We begin with the `WT raw data for figure 1.csv` dataset (@tbl-q2-compose).
+We begin with the `01_WT_solvent_exchange_conditions.csv` dataset (@tbl-q2-compose).
 
 ```{r}
 #| label: tbl-q2-compose
@@ -126,7 +126,7 @@ There are no obvious departures from assumptions in @fig-q2-model, although some
 
 ```{r}
 #| label: tbl-q2-contrasts
-#| tbl-cap: "Contrasts for model fits" 
+#| tbl-cap: "Contrasts for model fits, with Sidak adjustment." 
 #| tbl-subcap:
 #|    - "Figure 1B(i): Maximum amplitude, H2O"
 #|    - "Figure 1B(ii): Decay rate, H2O"
@@ -179,7 +179,7 @@ confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
   )
 ```
 
-The following contrasts are indicated not to include zero in their 95% confidence interval (estimates in @tbl-q2-contrasts), which we interpret as indicating an effect due to differing lipid-protein ratio:
+The following contrasts are indicated not to include zero in their 95% confidence interval (estimates in @tbl-q2-contrasts), which we interpret as indicating an effect due to differing lipid-protein ratio, or differing solvent condition:
 
 - `WT` Maximum amplitude, `H2O`: `LPR5-LPR10` (0.762nA [0.328,1.20]), `LPR10-LPR50` (0.648nA [0.166, 1.13]), `LPR5-LPR50` (1.41nA [0.947,1.87])
 - `WT` Decay rate, `H2O`: `LPR5-LPR10` (23.5.s [1.65,45.3]), `LPR5-LPR50` (44.0/s [20.7,67.3])
