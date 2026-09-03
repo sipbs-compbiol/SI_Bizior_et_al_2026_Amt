@@ -163,7 +163,7 @@ The contrasts of interest at each `LPR` are presented in @tbl-q1-contrasts.
 
 ```{r}
 #| label: tbl-q1-contrasts
-#| tbl-cap: "Contrasts for `Series`, accounting for heteroscedasticity." 
+#| tbl-cap: "Contrasts for `Series`, accounting for heteroscedasticity, with Sidak adjustments." 
 #| tbl-subcap:
 #|    - Maximum amplitude
 #|    - Decay rate
@@ -192,7 +192,7 @@ We present these relationships as in the manuscript, in @fig-q1-pubfig.
 
 ```{r}
 #| label: fig-q1-pubfig
-#| fig-cap: "`WT` measurements across `LPR5` and `LPR10` for two batches/series, with _p_-values indicated" 
+#| fig-cap: "`WT` measurements across `LPR5` and `LPR10` for two batches/series, Sidak-adjusted _p_-values indicated" 
 
 # Get p-values, accounting for heteroscedasticity and multiple testing
 # Also generate group1 and group2 columns
