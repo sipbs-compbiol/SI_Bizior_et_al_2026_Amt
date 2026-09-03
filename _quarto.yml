@@ -18,6 +18,10 @@ website:
     right:
       - href: index.qmd
         text: Home
+      - text: Analyses
+        menu:
+        - href: wt_controls.qmd
+          text: WT Control Equivalence
       - href: about.qmd
         text: About
   page-footer: 

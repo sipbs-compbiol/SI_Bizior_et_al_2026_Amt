@@ -1,0 +1,217 @@
+---
+title: "`WT` Control Series Equivalence"
+---
+
+## Is it appropriate to pool the two `WT` control series?
+
+Two wild-type/`WT` datasets were collected, one as part of (i) the solvent-exchange experiment series, and (ii) for the mutant experiment series.
+
+Our question can be phrased as:
+
+> Are there systematic differences between these two `WT` control series that would prevent us pooling the data from the two series in any analysis?
+
+Essentially, the question asks "can we ascribe a plausible non-zero difference in `WT` maximum amplitude or decay rate to the effect of a `Series`/batch parameter for the experiment, conditioned on `LPR` (which we anticipate affects both measurements)?" 
+
+Neither answer, yes or no, would prevent downstream statistical analysis, would inform how we use the control data. 
+The two `WT` datasets will always be reasonable controls for their corresponding experimental series, but if there is no effect ascribable to `Series`, we have some justification for pooling the data. If there is a discernible effect due to `Series` we can incorporate `Series` as an explanatory variable and estimate its effect separately from that of the treatments we are interested in, should we require to pool the data.
+
+### The Dataset
+
+We process the `dfm_wt_1` and `dfm_wt_2` (`WT` control) dataframes, to add a column indicating series, and unify the columns (@tbl-q1-compile).
+
+```{r}
+#| label: tbl-q1-compile
+#| tbl-cap: "Measurements for `WT` across two series. Values are measured at two values of `LPR`: `LPR5` and `LPR10`" 
+#| tbl-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| layout-ncol: 1
+# Use helper script to load dataframes
+source("assets/r/load_dataframes.R")
+dfms <- load_dataframes()
+
+dfm1 <- dfms$dfm_wt_1 |> dplyr::mutate(Series = "Series 2") |>
+  dplyr::filter(Condition == "H2O") |>
+  dplyr::filter(LPR != "LPR50") |>
+  dplyr::select(Series, LPR, Max_Amplitude, Decay_Rate)
+
+dfm2 <- dfms$dfm_wt_2 |> dplyr::mutate(Series = "Series 1") |>
+  dplyr::filter(LPR != "LPR50") |>
+  dplyr::select(Series, LPR, Max_Amplitude, Decay_Rate)
+
+dfm_comp <- rbind(dfm1, dfm2)
+
+# Show interactive tables of data
+DT::datatable(dfm_comp)
+```
+
+We visualise the distributions of datapoints between series, for each `LPR` value (@fig-q1-overview).
+
+```{r}
+#| label: fig-q1-overview
+#| fig-cap: "`WT` measurements across `LPR5` and `LPR10` for two batches/series" 
+
+p1_amp <- ggplot2::ggplot(dfm_comp, ggplot2::aes(x=Series, y=Max_Amplitude, color=Series)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::facet_wrap(~LPR) +
+  ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+# Visualise datasets as box/whisker with superimposed datapoints
+p1_k <- ggplot2::ggplot(dfm_comp, ggplot2::aes(x=Series, y=Decay_Rate, color=Series)) +
+  ggplot2::geom_boxplot(outlier.shape = NA) +
+  ggplot2::geom_jitter() +
+  ggplot2::facet_wrap(~LPR) +
+  ggplot2::labs(y="Decay rate constant k (/s)", x="") +
+  ggplot2::theme_minimal() + 
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 0.5, hjust=1))
+
+ggpubr::ggarrange(p1_amp, p1_k)
+```
+
+Visually we might expect from @fig-q1-overview that the means of maximum amplitude between `Series` do not differ. We might have similar expectations for decay rate at `LPR10`, though not at `LPR5`. 
+
+An apparent difference in decay rate at `LPR5` may induce an interaction effect in any linear model fit. There also appears, visually, to be a difference in variance (heteroscedasticity) between the two series: `Series 2` looks to have greater variance than `Series 1`.
+
+### The Question
+
+Our central question is whether there is a nonzero effect on maximum amplitude or decay rate constant in `WT`, conditioned on `LPR` value, due to the choice of `Series`
+
+### The Model
+
+We address the question using a linear model, treating `LPR` and `Series` as main effects. As we suspect from @fig-q1-overview that the effects of `Series` may not be independent of `LPR`, we use a linear model with interactions.
+
+```{r}
+#| label: tbl-q1-model
+#| tbl-cap: "Linear model fits of `Value ~ LPR * Series`" 
+#| tbl-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| layout-ncol: 2
+
+model1_amp_lm <- lm(Max_Amplitude ~ LPR * Series, data=dfm_comp)
+model1_k_lm <- lm(Decay_Rate ~ LPR * Series, data=dfm_comp)
+
+gtsummary::tbl_regression(model1_amp_lm)
+
+gtsummary::tbl_regression(model1_k_lm)
+```
+
+These model results (@tbl-q1-model) indicate that there is a reduction of maximum amplitude (-0.93nA, 95%CI[-1.1, -0.73]) and decay rate constant (-11/s, 95%CI[-20, -2.9]) on increasing `LPR` from `LPR5` to `LPR10`.
+
+The model fit indicates no effect on maximum amplitude due to the `Series` (-0.20nA [-0.43, -0.02]). However, `Series` does appear to be associated with a difference in decay rate constant (15/s, 95%CI[5.6, 25]), at a similar magnitude to the effect of increasing `LPR`.
+
+There is, for both models, no strong evidence of an interaction effect due to the way `Series` _interacts with_ `LPR`.
+
+### Checking Assumptions
+
+We have so far only assumed that our data are suitable for linear modelling. We check whether the data meet requirements in @fig-q1-modelcheck.
+
+```{r}
+#| label: fig-q1-modelcheck
+#| fig-cap: "Diagnostic plots of `Value ~ LPR + Dataset_use` fit"
+#| fig-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| fig-width: 10
+#| fig-height: 10
+#| layout-ncol: 2
+
+performance::check_model(model1_amp_lm, size_title=6)
+
+performance::check_model(model1_k_lm, size_title=6)
+```
+
+While both models are acceptably linear with a normal distribution of residuals (@fig-q1-modelcheck), there is a suggestion of heteroscedasticity, particularly for decay rate data (though the curve fit is suspect). To be cautious we therefore calculate heteroscedasticity-consistent standard errors, and recalculate effect sizes for the model parameters in @tbl-q1-params.
+
+```{r}
+#| label: tbl-q1-params
+#| tbl-cap: "Revised parameters for each model, taking into account heteroscedasticity" 
+#| tbl-subcap:
+#|   - "Maximum amplitude"
+#|   - "Decay rate"
+#| layout-ncol: 1
+
+parameters::model_parameters(model1_amp_lm, vcov="HC3") |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+    )
+
+parameters::model_parameters(model1_k_lm, vcov="HC3") |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+    )
+```
+
+Taking into account heteroscedasticity, the model output (@tbl-q1-params) now indicates that, for both maximum amplitude (-0.931nA, 95%CI[-1.09,-0.767]) and decay rate constant (-11.4/s, 95%CI[-13., -8.90]) there is a decrease with increasing `LPR`.
+
+For maximum amplitude the model indicates no difference associated with `Series`, but there is a difference between `Series` for decay rate constant (15.3/s [2.76, 27.8]). 
+
+There is again no strong evidence of interaction between terms for maximum amplitude or decay rate.
+
+The contrasts of interest at each `LPR` are presented in @tbl-q1-contrasts.
+
+```{r}
+#| label: tbl-q1-contrasts
+#| tbl-cap: "Contrasts for `Series`, accounting for heteroscedasticity." 
+#| tbl-subcap:
+#|    - Maximum amplitude
+#|    - Decay rate
+#| layout-ncol: 1
+
+EMM <- emmeans::emmeans(model1_amp_lm, ~ Series | LPR, vcov=sandwich::vcovHC(model1_amp_lm))
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+
+EMM <- emmeans::emmeans(model1_k_lm, ~ Series | LPR, vcov=sandwich::vcovHC(model1_k_lm))
+confint(emmeans::contrast(EMM, "pairwise", adjust="sidak")) |>
+  kableExtra::kbl() |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("hover", "responsive")
+  )
+```
+
+The contrasts in @tbl-q1-contrasts indicate that there is no difference in maximum amplitude associated with `Series` at either `LPR`. There is also no difference in decay rate between the two series at `LPR10`, but at `LPR5` an difference is seen (-15.3/s [-27.8,-2.76]).
+
+### Figure
+
+We present these relationships as in the manuscript, in @fig-q1-pubfig.
+
+```{r}
+#| label: fig-q1-pubfig
+#| fig-cap: "`WT` measurements across `LPR5` and `LPR10` for two batches/series, with _p_-values indicated" 
+
+# Get p-values, accounting for heteroscedasticity and multiple testing
+# Also generate group1 and group2 columns
+EMM_amp <- as.data.frame(pairs(emmeans::emmeans(model1_amp_lm, ~ Series | LPR, 
+                                                vcov=sandwich::vcovHC(model1_amp_lm)),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=3) |>
+  rstatix::add_significance()
+EMM_k <- as.data.frame(pairs(emmeans::emmeans(model1_k_lm, ~ Series | LPR, 
+                                              vcov=sandwich::vcovHC(model1_k_lm)),
+                               adjust="sidak")) |>
+  tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
+  dplyr::mutate(y.position=90) |>
+  rstatix::add_significance()
+
+
+p1_amp_annot <- p1_amp +
+  ggpubr::stat_pvalue_manual(EMM_amp, label="p = {scales::pvalue(p.value)}", size=3)
+
+p1_k_annot <- p1_k +
+  ggpubr::stat_pvalue_manual(EMM_k, label="p = {scales::pvalue(p.value)}", size=3)
+
+ggpubr::ggarrange(p1_amp_annot, p1_k_annot)
+```
+
+- [Download as .pdf](assets/images/fig00_WT_measurements_for_two_series_with_stats.pdf)
+- [Download as .png](assets/images/fig00_WT_measurements_for_two_series_with_stats.png)
