@@ -15,7 +15,7 @@ The two `WT` datasets will always be reasonable controls for their corresponding
 
 ## The Dataset
 
-We process the `dfm_wt_1` and `dfm_wt_2` (`WT` control) dataframes, to add a column indicating series, and unify the columns (@tbl-q1-compile).
+We process the `01_WT_solvent_exchange_conditions.csv` and `02_WT_variant_comparison.csv` (`WT` control) datasets, to generate a single dataframe with a column indicating experimental series (@tbl-q1-compile).
 
 ```{r}
 #| label: tbl-q1-compile
