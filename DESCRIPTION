@@ -1,0 +1,21 @@
+Package: SI_Henderson_et_al_2026_Amt
+Title: SI_Henderson_et_al_2026_Amt
+Version: 0.1
+Authors@R: c(
+    person("Leighton", "Pritchard", , "leighton.pritchard@strath.ac.uk", role = c("aut", "cre")),
+  )
+URL: https://github.com/sipbs-compbiol/SI_Henderson_et_al_2026_Amt
+Depends: 
+    R (>= 4.6.0)
+Imports:
+    tidyverse (>= 2.0.0),
+    ggplot2,
+    ggpubr,
+    see,
+    broom.helpers
+Suggests:
+    knitr,
+    sessioninfo
+Remotes: tidyverse/dplyr
+Encoding: UTF-8
+License: CC NC ND 4.0
