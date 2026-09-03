@@ -79,11 +79,11 @@ ggpubr::ggarrange(p1b_amp, p1b_k, p1d_amp, p1d_k, p1f_amp, p1f_k,
                   legend="none")
 ```
 
-### The Questions
+## The Questions
 
 We have multiple questions for this dataset. Within each of the six plots we wish to present the effects of the parameters plotted along the _x_-axis, for each measurement.
 
-### The Models
+## The Models
 
 We address these questions using a separate linear model for each set of figure data. For figures 1B and 1F we treat maximum amplitude and decay rate constant as dependent variables, and fit these to the `LPR` explanatory variable (`Value ~ LPR`). For figure 1D we proceed in a similar way, but separately fit maximum amplitude values for `LPR5` and `LPR10` to the `Condition` explanatory variable (`Max_Amplitude ~ Condition`).
 
@@ -183,6 +183,8 @@ The following contrasts are indicated not to include zero in their 95% confidenc
 - `WT` Decay rate, `LPR10`: no contrasts show significant difference
 - `WT` Maximum amplitude, `D2O`: `LPR5-LPR10` (0.232nA [0.006,0.458]), `LPR10-LPR50` (0.481nA [0.218,0.743]), `LPR5-LPR50` (0.713nA [0.458,0.968])
 - `WT` Decay rate, `D2O`: `LPR5-LPR10` (33.6/s [20.8,46.4]), `LPR5-LPR50` (51.3/s [37.0,65.7]), `LPR10-LPR50` (17.7/s [2.94,32.5])
+
+## Figure
 
 We can plot these differences in the style of the manuscript as in @fig-q2-pubfig
 
