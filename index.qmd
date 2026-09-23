@@ -45,21 +45,29 @@ The datasets are presented in @tbl-load-data.
 #| label: tbl-load-data
 #| tbl-cap: "Raw data (maximum amplitude, decay rate) for the manuscript analyses" 
 #| tbl-subcap:
-#|   - "WT data under solvent exchange conditions"
-#|   - "WT data for comparison with D162A and H170 variants"
-#|   - "D162A variant data"
-#|   - "H170 variant data"
-#| layout-ncol: 1
+#|   - "WT maximum amplitude data under solvent exchange conditions"
+#|   - "WT rate data under solvent exchange conditions"
+#|   - "Figure 2 maximum amplitude data for comparison with D162A and H170 variants"
+#|   - "Figure 2 rate data for comparison with D162A and H170 variants"
+#|   - "Figure 3 D162A variant maximum amplitude data"
+#|   - "Figure 3 D162A variant rate data"
+#|   - "Figure 5 H170 variant maximum amplitude data"
+#|   - "Figure 5 H170 variant rate data"
+#| layout-ncol: 2
 
 # Use helper script to load dataframes
 source("assets/r/load_dataframes.R")
 dfms <- load_dataframes()
 
 # Show interactive tables of data
-DT::datatable(dfms$dfm_wt_1, options=list(pageLength=5))
-DT::datatable(dfms$dfm_wt_2, options=list(pageLength=5))
-DT::datatable(dfms$dfm_d162, options=list(pageLength=5))
-DT::datatable(dfms$dfm_h170, options=list(pageLength=5))
+DT::datatable(dfms$dfm_wt_amp, options=list(pageLength=5))
+DT::datatable(dfms$dfm_wt_k, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig2_amp, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig2_k, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig3_amp, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig3_k, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig5_amp, options=list(pageLength=5))
+DT::datatable(dfms$dfm_fig5_k, options=list(pageLength=5))
 ```
 
 ## Reporting Problems Or Making Suggestions
