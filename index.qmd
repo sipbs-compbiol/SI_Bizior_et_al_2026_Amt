@@ -25,21 +25,19 @@ The pages in the `Analyses` section describe regression modelling for the manusc
 
 ## Getting Started
 
-The analysis is presented across four pages that can be accessed _via_ the `Analyses` menu or the links below:
+The analysis is presented across five pages that can be accessed _via_ the `Analyses` menu or the links below:
 
 - [`WT` control comparisons](wt_controls.qmd)
 - [Figure 1](figure_1.qmd)
 - [Figure 2](figure_2.qmd)
+- [Figure 3](figure_3.qmd)
 - [Figure 4](figure_4.qmd)
 
 ## Datasets
 
-Data files for this analysis can be downloaded from the links below:
+The underlying data for these analyses can be downloaded from the link below
 
-- [`01_WT_solvent_exchange_conditions.csv`](assets/data/01_WT_solvent_exchange_conditions.csv): `WT` data for the solvent-exchange experiment
-- [`02_WT_variant_comparison.csv`](assets/data/02_WT_variant_comparison.csv): `WT` data for comparisons with `D162A` and `H170` variants
-- [`03_D162A_variant_comparison.csv`](assets/data/03_D162A_variant_comparison.csv): data for the `D162A` variant
-- [`04_H170_variant_comparison.csv`](assets/data/04_H170_variant_comparison.csv): data for `H170` variants
+- [`NeRh50_Table_S1_raw_data_used_in_figures.csv`](assets/data/NeRh50_Table_S1_raw_data_used_in_figures.csv)
 
 The datasets are presented in @tbl-load-data.
 

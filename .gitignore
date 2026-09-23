@@ -13,3 +13,9 @@ _site/
 
 # macOS cruft
 .DS_Store
+
+# Build README
+README.html
+
+# Deprecated dataset
+Supplementary_Table_S1_clean_raw_data.*
