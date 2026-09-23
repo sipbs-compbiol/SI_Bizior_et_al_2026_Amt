@@ -6,7 +6,8 @@
 load_dataframes <- function() {
   # Read in combined data
   dfm_combined <- readr::read_csv("assets/data/NeRh50_Table_S1_raw_data_used_in_figures.csv", col_names=TRUE, col_types="fcffffcd") |>
-    dplyr::mutate(LPR = stringr::str_c("LPR", LPR))  # add prefix to LPR factor
+    dplyr::mutate(LPR = stringr::str_c("LPR", LPR)) |>  # add prefix to LPR factor
+    dplyr::mutate(Series = stringr::str_c("Series ", Series))  # add prefix to Series factor
   dfm_combined$LPR <- factor(dfm_combined$LPR, levels=c("LPR5", "LPR10", "LPR50"))  # order LPR factor levels
   colnames(dfm_combined) <- c("Series", "Figures", "Variant", "Condition", "LPR", "Measurement", "Unit", "Value")  # rename headers
   
@@ -18,10 +19,10 @@ load_dataframes <- function() {
   # Condition H2O
   dfm_wt_amp <- dfm_combined |>  # amplitude measurements
     dplyr::filter(Variant == "WT" & LPR %in% c("LPR5", "LPR10") & Condition == "H2O" & Measurement == "Maximum amplitude") |>
-    dplyr::select(Variant, Condition, LPR, Value)
+    dplyr::select(Series, Variant, Condition, LPR, Value)
   dfm_wt_k<- dfm_combined |>  # rate measurements
     dplyr::filter(Variant == "WT" & LPR %in% c("LPR5", "LPR10") & Condition == "H2O" & Measurement == "k") |>
-    dplyr::select(Variant, Condition, LPR, Value)
+    dplyr::select(Series, Variant, Condition, LPR, Value)
   
   # Figure 2: NeRh50 generates D2O-resistant, LPR-dependent electrogenic currents in response to NH4+ stimulation
   # For figure 2 we combine measurements that meet criteria:
