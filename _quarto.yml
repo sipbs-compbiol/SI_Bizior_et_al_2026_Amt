@@ -23,11 +23,11 @@ website:
         - href: wt_controls.qmd
           text: WT Control Equivalence
         - href: figure_1.qmd
-          text: Manuscript Figure 1
-        - href: figure_2.qmd
           text: Manuscript Figure 2
+        - href: figure_2.qmd
+          text: Manuscript Figure 3
         - href: figure_4.qmd
-          text: Manuscript Figure 4
+          text: Manuscript Figure 5
       - href: about.qmd
         text: About
   page-footer: 
