@@ -16,7 +16,7 @@ Figure 3 in the manuscript uses panels C and D to show the distribution of maxim
 
 ## The Dataset
 
-The data for this graph is drawn from two files: `WT Raw data for figure 2 and 4.csv` for the `WT` data (summary data removed with respect to the originating Excel file), and `NeRh50 D162A  raw values for Leighton.csv` for the `D162A` data. We combine these and generate a new column with interaction labels for `LPR` and `Variant` to obtain @tbl-q3-compose.
+We process the `NeRh50_Table_S1_raw_data_used_in_figures.csv` dataset to obtain the data for this analysis, and generate a new column with interaction labels for `LPR` and `Variant` to obtain @tbl-q3-compose.
 
 ```{r}
 #| label: tbl-q3-compose

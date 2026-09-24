@@ -16,7 +16,7 @@ Manuscript figure 2 uses three subfigures to show `WT` maximum amplitude and dec
 
 ## The Dataset
 
-We begin with maximum amplitude and  `01_WT_solvent_exchange_conditions.csv` dataset (@tbl-q2-compose).
+We process the `NeRh50_Table_S1_raw_data_used_in_figures.csv` dataset to obtain the data for this analysis (@tbl-q2-compose).
 
 ```{r}
 #| label: tbl-q2-compose
