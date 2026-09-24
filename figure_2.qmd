@@ -55,12 +55,14 @@ p2_amp <- ggplot2::ggplot(dfm_fig3_amp, ggplot2::aes(x=intact, y=Value, color=Va
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Maximum amplitude (nA)", x="") +
+  ggplot2::ylim(0, 3.5) +
   ggplot2::theme_minimal()
 
 p2_k <- ggplot2::ggplot(dfm_fig3_k, ggplot2::aes(x=intact, y=Value, color=Variant)) +
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Decay rate constant k (/s)", x="") +
+  ggplot2::ylim(0, 75) +
   ggplot2::theme_minimal()
 
 
@@ -187,10 +189,10 @@ EMMp4 <- as.data.frame(pairs(EMM4))  |>
   dplyr::select(!LPR)
 
 EMM_amp <- rbind(EMMp1, EMMp2)  |>
-  dplyr::mutate(y.position=3) |>
+  dplyr::mutate(y.position=2.5) |>
   rstatix::add_significance()
 EMM_k <- rbind(EMMp3, EMMp4) |>
-  dplyr::mutate(y.position=90) |>
+  dplyr::mutate(y.position=60) |>
   rstatix::add_significance()
 
 p2_amp_annot <- p2_amp +
