@@ -104,18 +104,18 @@ We have multiple questions for this dataset. Within each of the six plots we wis
 
 ## The Models
 
-We address these questions using a separate linear model for each set of figure data. For figures 1B and 1F we treat maximum amplitude and decay rate constant as dependent variables, and fit these to the `LPR` explanatory variable (`Value ~ LPR`). For figure 1D we proceed in a similar way, but separately fit maximum amplitude values for `LPR5` and `LPR10` to the `Condition` explanatory variable (`Max_Amplitude ~ Condition`).
+We address these questions using a separate linear model for each set of figure data. For figures 2B and 2F we treat maximum amplitude and decay rate constant as dependent variables, and fit these to the `LPR` explanatory variable (`Value ~ LPR`). For figure 2D we proceed in a similar way, but fit to the `Condition` explanatory variable (`Value ~ Condition`).
 
 ```{r}
 #| label: fig-q2-model
 #| fig-cap: "Diagnostic plots for linear model fits of `Value ~ LPR` and `Max_amplitude ~ Condition`" 
 #| fig-subcap:
-#|    - "Figure 1B(i)"
-#|    - "Figure 1B(ii)"
-#|    - "Figure 1D(i)"
-#|    - "Figure 1D(ii)"
-#|    - "Figure 1F(i)"
-#|    - "Figure 1F(ii)"
+#|    - "Figure 2B(i)"
+#|    - "Figure 2B(ii)"
+#|    - "Figure 2D(i)"
+#|    - "Figure 2D(ii)"
+#|    - "Figure 2F(i)"
+#|    - "Figure 2F(ii)"
 #| fig-width: 10
 #| fig-height: 10
 #| layout-ncol: 2
@@ -143,12 +143,12 @@ There are no obvious departures from assumptions in @fig-q2-model, although some
 #| label: tbl-q2-contrasts
 #| tbl-cap: "Contrasts for model fits, with Sidak adjustment." 
 #| tbl-subcap:
-#|    - "Figure 1B(i): Maximum amplitude, H2O"
-#|    - "Figure 1B(ii): Decay rate, H2O"
-#|    - "Figure 1D(i): Maximum amplitude, LPR5"
-#|    - "Figure 1D(ii): Decay rate, LPR5"
-#|    - "Figure 1F(i): Maximum amplitude, D2O"
-#|    - "Figure 1F(ii): Decay rate, D2O"
+#|    - "Figure 2B(i): Maximum amplitude, H2O"
+#|    - "Figure 2B(ii): Decay rate, H2O"
+#|    - "Figure 2D(i): Maximum amplitude, LPR5"
+#|    - "Figure 2D(ii): Decay rate, LPR5"
+#|    - "Figure 2F(i): Maximum amplitude, D2O"
+#|    - "Figure 2F(ii): Decay rate, D2O"
 #| layout-ncol: 2
 
 EMM <- emmeans::emmeans(model1b_amp_lm, ~ LPR)
@@ -209,14 +209,14 @@ We can plot these differences in the style of the manuscript as in @fig-q2-pubfi
 
 ```{r}
 #| label: fig-q2-pubfig
-#| fig-cap: "WT measurements across three LPRs and three experimental conditions, representing figures 1B, 1D, and 1F from the draft manuscript. , with Sidak-adjusted _p_-values indicated" 
+#| fig-cap: "WT measurements across three LPRs and three experimental conditions, representing figures 2B, 2D, and 2F from the draft manuscript. , with Sidak-adjusted _p_-values indicated" 
 #| fig-subcap:
-#|    - "Figure 1B(i)"
-#|    - "Figure 1B(ii)"
-#|    - "Figure 1D(i)"
-#|    - "Figure 1D(ii)"
-#|    - "Figure 1F(i)"
-#|    - "Figure 1F(ii)"
+#|    - "Figure 2B(i)"
+#|    - "Figure 2B(ii)"
+#|    - "Figure 2D(i)"
+#|    - "Figure 2D(ii)"
+#|    - "Figure 2F(i)"
+#|    - "Figure 2F(ii)"
 #| fig-width: 10
 #| fig-height: 15
 
@@ -247,9 +247,6 @@ EMM_lpr5_k_d <- as.data.frame(pairs(emmeans::emmeans(model1d_lpr5_k_lm, ~ Condit
   dplyr::mutate(y.position=90) |>
   rstatix::add_significance() |>
   dplyr::mutate(LPR="LPR5")
-
-#EMM_d <- rbind(EMM_lpr5_amp_d, EMM_lpr5_k_d)
-#EMM_d$LPR <- factor(EMM_d$LPR, levels=c("LPR5", "LPR10"))
 
 EMM_amp_f <- as.data.frame(pairs(emmeans::emmeans(model1f_amp_lm, ~ LPR),
                                adjust="sidak")) |>
