@@ -48,6 +48,7 @@ p1b_amp <- ggplot2::ggplot(dfms$dfm_fig2_amp |> dplyr::filter(Condition == "H2O"
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::ylim(0, 3.5) +
   ggplot2::theme_minimal()
 
 p1b_k <- ggplot2::ggplot(dfms$dfm_fig2_k |> dplyr::filter(Condition == "H2O"), 
@@ -55,6 +56,7 @@ p1b_k <- ggplot2::ggplot(dfms$dfm_fig2_k |> dplyr::filter(Condition == "H2O"),
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::ylim(0, 105) +
   ggplot2::theme_minimal()
 
 p1d_amp <- ggplot2::ggplot(dfms$dfm_fig2_amp |> dplyr::filter(LPR == "LPR5"), 
@@ -62,6 +64,7 @@ p1d_amp <- ggplot2::ggplot(dfms$dfm_fig2_amp |> dplyr::filter(LPR == "LPR5"),
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::ylim(0, 3.5) +
   ggplot2::theme_minimal() +
   ggplot2::facet_wrap(~LPR)
 
@@ -70,6 +73,7 @@ p1d_k <- ggplot2::ggplot(dfms$dfm_fig2_k |> dplyr::filter(LPR == "LPR5"),
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::ylim(0, 105) +
   ggplot2::theme_minimal() +
   ggplot2::facet_wrap(~LPR)
 
@@ -78,6 +82,7 @@ p1f_amp <- ggplot2::ggplot(dfms$dfm_fig2_amp |> dplyr::filter(Condition == "D2O"
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Maximum amplitude (nA)") +
+  ggplot2::ylim(0, 3.5) +
   ggplot2::theme_minimal()
 
 p1f_k <- ggplot2::ggplot(dfms$dfm_fig2_k |> dplyr::filter(Condition == "D2O"), 
@@ -85,6 +90,7 @@ p1f_k <- ggplot2::ggplot(dfms$dfm_fig2_k |> dplyr::filter(Condition == "D2O"),
   ggplot2::geom_boxplot(outlier.shape = NA) +
   ggplot2::geom_jitter() +
   ggplot2::labs(y="Decay rate constant k (/s)") +
+  ggplot2::ylim(0, 105) +
   ggplot2::theme_minimal()
 
 ggpubr::ggarrange(p1b_amp, p1b_k, p1d_amp, p1d_k, p1f_amp, p1f_k,
@@ -225,39 +231,39 @@ We can plot these differences in the style of the manuscript as in @fig-q2-pubfi
 EMM_amp_b <- as.data.frame(pairs(emmeans::emmeans(model1b_amp_lm, ~ LPR),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=3) |>
+  dplyr::mutate(y.position=2.5) |>
   rstatix::add_significance()
 
 EMM_k_b <- as.data.frame(pairs(emmeans::emmeans(model1b_k_lm, ~ LPR),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=90) |>
+  dplyr::mutate(y.position=85) |>
   rstatix::add_significance()
 
 EMM_lpr5_amp_d <- as.data.frame(pairs(emmeans::emmeans(model1d_lpr5_amp_lm, ~ Condition),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=3) |>
+  dplyr::mutate(y.position=2.5) |>
   rstatix::add_significance() |>
   dplyr::mutate(LPR="LPR5")
 
 EMM_lpr5_k_d <- as.data.frame(pairs(emmeans::emmeans(model1d_lpr5_k_lm, ~ Condition),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=90) |>
+  dplyr::mutate(y.position=85) |>
   rstatix::add_significance() |>
   dplyr::mutate(LPR="LPR5")
 
 EMM_amp_f <- as.data.frame(pairs(emmeans::emmeans(model1f_amp_lm, ~ LPR),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=3) |>
+  dplyr::mutate(y.position=2.5) |>
   rstatix::add_significance()
 
 EMM_k_f <- as.data.frame(pairs(emmeans::emmeans(model1f_k_lm, ~ LPR),
                                adjust="sidak")) |>
   tidyr::separate(contrast, into=c("group1", "group2"), sep=" - ") |>
-  dplyr::mutate(y.position=90) |>
+  dplyr::mutate(y.position=85) |>
   rstatix::add_significance()
 
 p1b_amp_annot <- p1b_amp +
