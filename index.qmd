@@ -28,10 +28,9 @@ The pages in the `Analyses` section describe regression modelling for the manusc
 The analysis is presented across five pages that can be accessed _via_ the `Analyses` menu or the links below:
 
 - [`WT` control comparisons](wt_controls.qmd)
-- [Figure 1](figure_1.qmd)
-- [Figure 2](figure_2.qmd)
-- [Figure 3](figure_3.qmd)
-- [Figure 4](figure_4.qmd)
+- [Figure 2](figure_1.qmd)
+- [Figure 3](figure_2.qmd)
+- [Figure 5](figure_4.qmd)
 
 ## Datasets
 
