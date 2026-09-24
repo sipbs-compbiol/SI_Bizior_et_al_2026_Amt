@@ -1,5 +1,5 @@
 ---
-title: "Figure 4: Comparison of `H170` variants"
+title: "Figure 5: Comparison of `H170` variants"
 ---
 
 ```{r setup}
@@ -12,11 +12,11 @@ dfms <- load_dataframes()
 options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
 ```
 
-Figure 4 uses panel B to display maximum amplitude and decay rate constants for each of the `H170` mutants at `LPR5` and `LPR10`.
+Figure 5 uses panel B to display maximum amplitude and decay rate constants for each of the `H170` mutants at `LPR5` and `LPR10`.
 
 ## The Dataset
 
-The data for this graph is provided in `02_WT_variant_comparison.csv` and `04_H170_variant_comparison.csv` for `WT` and the three `H170` variants, and we comobine these in @tbl-q4-compose.
+We process the `NeRh50_Table_S1_raw_data_used_in_figures.csv` dataset to obtain the data for this analysis in @tbl-q4-compose.
 
 ```{r}
 #| label: tbl-q4-compose
@@ -31,11 +31,11 @@ dfm_fig4$Variant <- factor(dfm_fig4$Variant, c("WT", "H170A", "H170D", "H170E"))
 DT::datatable(dfm_fig4)
 ```
 
-We visualise the dataset in the style of draft figure 4, in @fig-q4-overview.
+We visualise the dataset in the style of draft figure 5, in @fig-q4-overview.
 
 ```{r warning=FALSE}
 #| label: fig-q4-overview
-#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript"
+#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 5B from the draft manuscript"
 
 # Visualise datasets as box/whisker with superimposed datapoints
 p4_h170a_amp <- ggplot2::ggplot(dfm_fig4 |> dplyr::filter(Variant=="H170A"), 
@@ -167,7 +167,7 @@ confint(emmeans::contrast(EMM2, "pairwise", adjust="sidak")) |>
 
 ```
 
-Restricting interpretation to the contrasts in manuscript figure 4, we find the following robustly nonzero differences for `LPR` changes:
+Restricting interpretation to the contrasts in manuscript figure 5, we find the following robustly nonzero differences for `LPR` changes:
 
 - Maximum amplitude decreases for `H170A` by 0.459nA [0.0186,0.900] from `LPR5` to `LPR10`
 - Maximum amplitude decreases for `H170D` by 0.810nA [0.359,1.27] from `LPR5` to `LPR10`
@@ -182,7 +182,7 @@ We visualise this with $p$-values in @fig-q4-pubfig, which we interpret as the c
 
 ```{r warning=FALSE}
 #| label: fig-q4-pubfig
-#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 4B from the draft manuscript , with Sidak-adjusted _p_-values indicated" 
+#| fig-cap: "`H170` variant measurements across `LPR5` and `LPR10` as in figure 5B from the draft manuscript , with Sidak-adjusted _p_-values indicated" 
 
 # Get p-values, accounting for heteroscedasticity and multiple testing
 # Also generate group1 and group2 columns
