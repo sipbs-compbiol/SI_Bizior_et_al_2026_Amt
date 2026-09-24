@@ -42,10 +42,10 @@ load_dataframes <- function() {
   # WT or D162 Variant
   # LPR5 or LPR10
   dfm_fig3_amp <- dfm_combined |>  # amplitude measurements
-    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 2" & LPR %in% c("LPR5", "LPR10") & Measurement == "Maximum amplitude") |>
+    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 1" & LPR %in% c("LPR5", "LPR10") & Measurement == "Maximum amplitude") |>
     dplyr::select(Variant, Condition, LPR, Value)
   dfm_fig3_k <- dfm_combined |>  # rate measurements
-    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 2" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
+    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 1" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
     dplyr::select(Variant, Condition, LPR, Value)
   
   # Figure 5: Electrophysiological characterisation of H170 variants.
