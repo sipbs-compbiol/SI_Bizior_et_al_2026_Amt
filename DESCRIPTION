@@ -1,10 +1,10 @@
-Package: SI_Henderson_et_al_2026_Amt
-Title: SI_Henderson_et_al_2026_Amt
+Package: SI_Bizior_et_al_2026_Amt
+Title: SI_Bizior_et_al_2026_Amt
 Version: 0.1
 Authors@R: c(
     person("Leighton", "Pritchard", , "leighton.pritchard@strath.ac.uk", role = c("aut", "cre")),
   )
-URL: https://github.com/sipbs-compbiol/SI_Henderson_et_al_2026_Amt
+URL: https://github.com/sipbs-compbiol/SI_Bizior_et_al_2026_Amt
 Depends: 
     R (>= 4.6.0)
 Imports:
