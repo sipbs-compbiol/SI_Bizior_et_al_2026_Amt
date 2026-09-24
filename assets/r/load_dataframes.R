@@ -9,7 +9,8 @@ load_dataframes <- function() {
     dplyr::mutate(LPR = stringr::str_c("LPR", LPR)) |>  # add prefix to LPR factor
     dplyr::mutate(Series = stringr::str_c("Series ", Series))  # add prefix to Series factor
   dfm_combined$LPR <- factor(dfm_combined$LPR, levels=c("LPR5", "LPR10", "LPR50"))  # order LPR factor levels
-  dfm_combined$Condition <- factor(dfm_combined$Condition, levels=c("H2O", "D2O", "D2O>H2O"))  # order LPR factor levels
+  dfm_combined$Condition <- factor(dfm_combined$Condition, levels=c("H2O", "D2O", "D2O>H2O"))  # order Condition factor levels
+  dfm_combined$Variant <- factor(dfm_combined$Variant, c("WT", "D162A", "H170A", "H170D", "H170E"))  # order Variant factor levels
   colnames(dfm_combined) <- c("Series", "Figures", "Variant", "Condition", "LPR", "Measurement", "Unit", "Value")  # rename headers
   
   # Supporting figure that is not in the main manuscript
