@@ -9,6 +9,7 @@ load_dataframes <- function() {
     dplyr::mutate(LPR = stringr::str_c("LPR", LPR)) |>  # add prefix to LPR factor
     dplyr::mutate(Series = stringr::str_c("Series ", Series))  # add prefix to Series factor
   dfm_combined$LPR <- factor(dfm_combined$LPR, levels=c("LPR5", "LPR10", "LPR50"))  # order LPR factor levels
+  dfm_combined$Condition <- factor(dfm_combined$Condition, levels=c("H2O", "D2O", "D2O>H2O"))  # order LPR factor levels
   colnames(dfm_combined) <- c("Series", "Figures", "Variant", "Condition", "LPR", "Measurement", "Unit", "Value")  # rename headers
   
   # Supporting figure that is not in the main manuscript
@@ -29,10 +30,10 @@ load_dataframes <- function() {
   # WT Variant
   # Series 2
   dfm_fig2_amp <- dfm_combined |>  # amplitude measurements
-    dplyr::filter(Variant == "WT" & Series == "2" & Measurement == "Maximum amplitude") |>
+    dplyr::filter(Variant == "WT" & Series == "Series 2" & Measurement == "Maximum amplitude") |>
     dplyr::select(Variant, Condition, LPR, Value)
   dfm_fig2_k<- dfm_combined |>  # rate measurements
-    dplyr::filter(Variant == "WT" & Series == "2" & Measurement == "k") |>
+    dplyr::filter(Variant == "WT" & Series == "Series 2" & Measurement == "k") |>
     dplyr::select(Variant, Condition, LPR, Value)
   
   # Figure 3: D162A uncouples ammonium binding from translocation.
@@ -41,10 +42,10 @@ load_dataframes <- function() {
   # WT or D162 Variant
   # LPR5 or LPR10
   dfm_fig3_amp <- dfm_combined |>  # amplitude measurements
-    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "2" & LPR %in% c("LPR5", "LPR10") & Measurement == "Maximum amplitude") |>
+    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 2" & LPR %in% c("LPR5", "LPR10") & Measurement == "Maximum amplitude") |>
     dplyr::select(Variant, Condition, LPR, Value)
   dfm_fig3_k <- dfm_combined |>  # rate measurements
-    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "2" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
+    dplyr::filter(Variant %in% c("WT", "D162A") & Series == "Series 2" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
     dplyr::select(Variant, Condition, LPR, Value)
   
   # Figure 5: Electrophysiological characterisation of H170 variants.
@@ -53,10 +54,10 @@ load_dataframes <- function() {
   # Series 1
   # LPR5 or LPR10
   dfm_fig5_amp <- dfm_combined |>  # amplitude measurements
-    dplyr::filter(Variant %in% c("WT", "H170A", "H170D", "H170E") & Series == "1" & LPR %in% c("LPR5", "LPR10") &  Measurement == "Maximum amplitude") |>
+    dplyr::filter(Variant %in% c("WT", "H170A", "H170D", "H170E") & Series == "Series 1" & LPR %in% c("LPR5", "LPR10") &  Measurement == "Maximum amplitude") |>
     dplyr::select(Variant, Condition, LPR, Value)
   dfm_fig5_k <- dfm_combined |>  # rate measurements
-    dplyr::filter(Variant %in% c("WT", "H170A", "H170D", "H170E") & Series == "1" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
+    dplyr::filter(Variant %in% c("WT", "H170A", "H170D", "H170E") & Series == "Series 1" & LPR %in% c("LPR5", "LPR10") &  Measurement == "k") |>
     dplyr::select(Variant, Condition, LPR, Value)
   
   return(list(dfm_wt_amp=dfm_wt_amp,
