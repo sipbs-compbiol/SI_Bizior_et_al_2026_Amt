@@ -1,5 +1,5 @@
 ---
-title: "Figure 2: Comparison of `WT` and `D162` variants"
+title: "Figure 3: Comparison of `WT` and `D162` variants"
 ---
 
 ```{r setup}
@@ -12,7 +12,7 @@ dfms <- load_dataframes()
 options(ggplot2.discrete.colour = wesanderson::wes_palette("AsteroidCity1"))
 ```
 
-Figure 2 in the manuscript uses panels C and E to show the distribution of maximum amplitude and decay rate between `LPR5` and `LPR10` for `WT` and `D162` variants.
+Figure 3 in the manuscript uses panels C and D to show the distribution of maximum amplitude and decay rate between `LPR5` and `LPR10` for `WT` and `D162` variants.
 
 ## The Dataset
 
@@ -32,11 +32,11 @@ dfm_fig2$intact <- factor(dfm_fig2$intact, levels=c("LPR5.WT", "LPR5.D162A", "LP
 DT::datatable(dfm_fig2)
 ```
 
-We visualise the dataset in the style of figure 2, in @fig-q3-overview.
+We visualise the dataset in the style of figure 3, in @fig-q3-overview.
 
 ```{r warning=FALSE}
 #| label: fig-q3-overview
-#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 2C and 2E from the draft manuscript"
+#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 3C and 3D from the draft manuscript"
 
 # Visualise datasets as box/whisker with superimposed datapoints
 p2_amp <- ggplot2::ggplot(dfm_fig2, ggplot2::aes(x=intact, y=Max_Amplitude, color=Variant)) +
@@ -151,7 +151,7 @@ We visualise this in @fig-q3-pubfig.
 
 ```{r warning=FALSE}
 #| label: fig-q3-pubfig
-#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 2C and 2E from the draft manuscript, with _p_-values indicated" 
+#| fig-cap: "`WT` measurements across `LPR5`, `LPR10`, `LPR50` for the `D2O` condition, as in figures 3C and 3E from the draft manuscript, with _p_-values indicated" 
 
 # Get p-values, accounting for heteroscedasticity and multiple testing
 # Also generate group1 and group2 columns
