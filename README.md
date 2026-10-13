@@ -1,6 +1,8 @@
 # README.md SI_Bizior_et_al_2026_Amt
 
-This repository describes supplementary statistical anakysis for the Bizior _et al._ (2026) manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve."
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23337561.svg)](https://doi.org/10.5281/zenodo.23337561)
+
+This repository describes supplementary statistical analysis for the Bizior _et al._ (2026) manuscript "A bacterial Rhesus transporter retunes a structurally conserved ammonium pore into a reversible nitrogen valve."
 
 The analysis proceeds from the data file `NeRh50_Table_S1_raw_data_used_in_figures.xlsx` provided by Arnaud Javelle (2026-09-02). This comprises a single table, exported into the file `NeRh50_Table_S1_raw_data_used_in_figures.csv` with the columns:
 
